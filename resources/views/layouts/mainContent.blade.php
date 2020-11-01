@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+
+    @yield('styleFiles')
 </head>
 
 <body>

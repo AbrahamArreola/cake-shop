@@ -1,0 +1,11 @@
+.shop-box-inner, .list-group-item, .list-group-item-action{
+    background: #f5f5f5 !important;
+}
+
+.product-item-filter button{
+    color: white;
+}
+
+.why-text{
+    background: #e6e6e6;
+}
