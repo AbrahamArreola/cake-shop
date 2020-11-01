@@ -27,17 +27,17 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="images/logo.png" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="/product-registration"><img src="{{ asset('assets/images/logo.jpg') }}" class="logo" alt=""></a>
                 </div>
                 <!-- End Header Navigation -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                    <li class="nav-item {{ $menu == 'menu1' ? 'active' : '' }}"><a class="nav-link" href="index.html">Inicio</a></li>
+                        <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link" href="about.html">¿Quiénes somos?</a></li>
+                        <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Tienda</a>
                             <ul class="dropdown-menu">
                                 <li><a href="shop.html">Sidebar Shop</a></li>
                                 <li><a href="shop-detail.html">Shop Detail</a></li>
@@ -47,8 +47,7 @@
                                 <li><a href="wishlist.html">Wishlist</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                        <li class="nav-item {{ $menu == 'menu4' ? 'active' : '' }}"><a class="nav-link" href="contact-us.html">Contacto</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -61,7 +60,7 @@
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="badge">3</span>
-                                <p>My Cart</p>
+                                <p>Carrito</p>
                             </a>
                         </li>
                     </ul>
@@ -101,6 +100,18 @@
     </header>
     <!-- End Main Top -->
 
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+
     @yield('content')
 
     <!-- Start Footer  -->
@@ -110,15 +121,17 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-widget">
-                            <h4>About Freshshop</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                            <h4>Acerca de Cupcake Mio</h4>
+                            <p>Somos una pastelería/repostería en donde nos enfocamos en encantar el paladar de nuestros clientes
+                                y satisfacer sus deseos a través de nuestra imaginación para recrear sus peticiones con nuestros
+                                postres.
+                            </p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-top-box">
-                            <h4>Social Media</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <h4>Redes sociales</h4>
+                            <p>Puedes contactarnos y obtener más información acerca de nuestras novedades en nuestras redes sociales</p>
                             <ul>
                                 <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
@@ -132,16 +145,16 @@
                     </div>
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-link-contact">
-                            <h4>Contact Us</h4>
+                            <h4>Contáctanos</h4>
                             <ul>
                                 <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                    <p><i class="fas fa-map-marker-alt"></i>Dirección: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                                    <p><i class="fas fa-phone-square"></i>Teléfono: <a href="tel: 33 03 04 05 06">+1-888 705 770</a></p>
                                 </li>
                                 <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                    <p><i class="fas fa-envelope"></i>Email: <a href="Correo: contactinfo@gmail.com">contactinfo@gmail.com</a></p>
                                 </li>
                             </ul>
                         </div>

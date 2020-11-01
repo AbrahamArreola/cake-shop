@@ -1,4 +1,4 @@
-@extends('layouts.navbar')
+@extends('layouts.mainContent', ['menu' => 'menu3'])
 
 @section('title', 'Registrar productos')
 
