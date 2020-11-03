@@ -8,6 +8,14 @@
 
 @section('scriptFiles')
     <script src="{{ asset('js/productCrud.js') }}"></script>
+
+    @if ($errors->any())
+        <script>
+            $('#productModal').modal('show');
+
+        </script>
+    @endif
+
 @endsection
 
 @section('content')
@@ -184,34 +192,69 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/product" method="POST">
+                        @csrf
                         <div class="form-group">
-                            <label for="name">Nombre del producto</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Pastel red velvet">
+                            <label for="name">Nombre</label>
+                            @if ($errors->has('name'))
+                                <p class="text-danger"> ({{ $errors->first('name') }}) </p>
+                                <input type="text" class="form-control errorValidation resettable" id="name" name="name"
+                                    placeholder="Pastel red velvet">
+                            @else
+                                <input type="text" class="form-control resettable" id="name" name="name"
+                                    placeholder="Pastel red velvet">
+                            @endif
                         </div>
+
                         <div class="form-group">
                             <label for="price">Precio ($)</label>
-                            <input type="number" class="form-control" id="price" name="price" min="0" max="5000"
-                                placeholder="$300">
+                            @if ($errors->has('price'))
+                                <p class="text-danger"> ({{ $errors->first('price') }}) </p>
+                                <input type="number" class="form-control errorValidation resettable" id="price" name="price" min="0"
+                                    max="5000" placeholder="$300">
+                            @else
+                                <input type="number" class="form-control resettable" id="price" name="price" min="0" max="5000"
+                                    placeholder="$300">
+                            @endif
                         </div>
+
                         <div class="form-group">
-                            <label for="category">Categoría</label>
-                            <select class="form-control" id="category" name="category">
-                                <option selected disabled hidden>Selecciona una categoría</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
+                            <label for="category_id">Categoría</label>
+                            @if ($errors->has('category_id'))
+                                <p class="text-danger"> ({{ $errors->first('category_id') }}) </p>
+                                <select class="form-control errorValidation" id="category" name="category_id">
+                                @else
+                                    <select class="form-control" id="category" name="category_id">
+                            @endif
+                            <option selected disabled hidden>Selecciona una categoría</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                            @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="description">Descripción</label>
-                            <textarea class="form-control" id="description" name="description" rows="3" style="resize: none"
-                                placeholder="Delicioso"></textarea>
+                            @if ($errors->has('description'))
+                                <p class="text-danger"> ({{ $errors->first('description') }}) </p>
+                                <textarea class="form-control errorValidation resettable" id="description" name="description" rows="3"
+                                    style="resize: none" placeholder="Delicioso"></textarea>
+                            @else
+                                <textarea class="form-control resettable" id="description" name="description" rows="3"
+                                    style="resize: none" placeholder="Delicioso"></textarea>
+                            @endif
                         </div>
+
+                        <div class="form-group">
+                            <label for="file">Imagen</label>
+                            <input type="file" class="form-control-file" id="file">
+                        </div>
+                        <button id="registerProductButton" type="submit" style="display: none"></button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn">Registrar</button>
+                    <button type="button" class="btn"
+                        onclick="document.getElementById('registerProductButton').click()">Registrar</button>
                 </div>
             </div>
         </div>

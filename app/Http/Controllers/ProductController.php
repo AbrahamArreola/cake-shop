@@ -39,7 +39,30 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $translations = [
+            'name' => 'Nombre',
+            'price' => 'Precio',
+            'category_id' => 'Categoría',
+            'description' => 'Descripción',
+            'image' => 'Image'
+        ];
+
+        $customMessages = [
+            'required' => 'El campo :attribute es necesario',
+            'string' => 'El campo :attribute debe ser texto',
+            'numeric' => 'El campo :attribute debe ser un valor numérico'
+        ];
+
+        $request->validate([
+            'name' => ['required', 'string'],
+            'price' => ['required', 'numeric'],
+            'category_id' =>['required', 'numeric'],
+            'description' => ['required', 'string']
+        ], $customMessages, $translations);
+
+        Product::create($request->all());
+
+        return redirect('/product');
     }
 
     /**

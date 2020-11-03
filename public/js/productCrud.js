@@ -1,6 +1,7 @@
 $(".modal").on("hidden.bs.modal", function(){
-    $(this).find("input,textarea").val('').end();
-    $(this).find("select").prop('selectedIndex', 0).end();
+    $(this).find(".resettable").val('').removeClass('errorValidation').end();
+    $(this).find("select").prop('selectedIndex', 0).removeClass('errorValidation').end();
+    $(this).find("p").text('').end();
 });
 
 $("#editCategoriesTrigger").on("click", function(){
