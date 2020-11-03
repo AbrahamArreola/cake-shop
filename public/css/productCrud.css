@@ -12,6 +12,14 @@
     background: #e6e6e6;
 }
 
+.filter-sidebar-left h3{
+    display: inline-block;
+}
+
+.filter-sidebar-left i{
+    cursor: pointer;
+}
+
 /* Modal window */
 
 .btn:focus,

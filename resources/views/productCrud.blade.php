@@ -119,45 +119,37 @@
                         <div class="filter-sidebar-left">
                             <div class="title-left">
                                 <h3>Categorías</h3>
+                                <i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="right"
+                                    title="Editar categorías" id="editCategoriesTrigger"></i>
                             </div>
                             <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men"
                                 data-children=".sub-men">
-                                <div class="list-group-collapse sub-men">
-                                    <a class="list-group-item list-group-item-action" href="#sub-men1"
-                                        data-toggle="collapse" aria-expanded="true" aria-controls="sub-men1">Fruits & Drinks
-                                        <small class="text-muted">(100)</small>
-                                    </a>
-                                    <div class="collapse show" id="sub-men1" data-parent="#list-group-men">
-                                        <div class="list-group">
-                                            <a href="#" class="list-group-item list-group-item-action active">Fruits 1
-                                                <small class="text-muted">(50)</small></a>
-                                            <a href="#" class="list-group-item list-group-item-action">Fruits 2 <small
-                                                    class="text-muted">(10)</small></a>
-                                            <a href="#" class="list-group-item list-group-item-action">Fruits 3 <small
-                                                    class="text-muted">(10)</small></a>
-                                            <a href="#" class="list-group-item list-group-item-action">Fruits 4 <small
-                                                    class="text-muted">(10)</small></a>
-                                            <a href="#" class="list-group-item list-group-item-action">Fruits 5 <small
-                                                    class="text-muted">(20)</small></a>
+
+                                @if (count($categories) == 0)
+                                    <p>Nothing to show</p>
+                                @else
+                                    @foreach ($categories as $category)
+                                        <div class="list-group-collapse sub-men">
+                                            <a class="list-group-item list-group-item-action" href="#sub-men1"
+                                                data-toggle="collapse" aria-expanded="true" aria-controls="sub-men1">
+                                                {{ $category->name }}
+                                                <small class="text-muted"> {{ count($category->products) }} </small>
+                                            </a>
+                                            <div class="collapse show" id="sub-men1" data-parent="#list-group-men">
+                                                <div class="list-group">
+
+                                                    @foreach ($category->products as $product)
+                                                        <a href="#" class="list-group-item list-group-item-action">
+                                                            {{ $product->name }}
+                                                        </a>
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-collapse sub-men">
-                                    <a class="list-group-item list-group-item-action" href="#sub-men2"
-                                        data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">Vegetables
-                                        <small class="text-muted">(50)</small>
-                                    </a>
-                                    <div class="collapse" id="sub-men2" data-parent="#list-group-men">
-                                        <div class="list-group">
-                                            <a href="#" class="list-group-item list-group-item-action">Vegetables 1 <small
-                                                    class="text-muted">(10)</small></a>
-                                            <a href="#" class="list-group-item list-group-item-action">Vegetables 2 <small
-                                                    class="text-muted">(20)</small></a>
-                                            <a href="#" class="list-group-item list-group-item-action">Vegetables 3 <small
-                                                    class="text-muted">(20)</small></a>
-                                        </div>
-                                    </div>
-                                </div>
+                                    @endforeach
+                                @endif
+
                             </div>
                         </div>
                         <div class="filter-price-left">
@@ -220,6 +212,26 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar categorías</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn">Editar</button>
                 </div>
             </div>
         </div>
