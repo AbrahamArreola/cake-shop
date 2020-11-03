@@ -21,7 +21,7 @@
                     <div class="right-product-box">
                         <div class="product-item-filter row">
                             <div class="col-12 col-sm-8 text-center text-sm-left">
-                                <button class="btn hvr-hover" data-toggle="modal" data-target="#exampleModalCenter">Agregar
+                                <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Agregar
                                     producto</button>
                                 <p>Mostrando los resultados</p>
                             </div>
@@ -43,82 +43,66 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                     <div class="row">
-                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                            <div class="products-single fix">
-                                                <div class="box-img-hover">
-                                                    <div class="type-lb">
-                                                        <p class="sale">Sale</p>
-                                                    </div>
-                                                    <img src="{{ asset('assets/images/img-pro-02.jpg') }}" class="img-fluid"
-                                                        alt="Image">
-                                                    <div class="mask-icon">
-                                                        <ul>
-                                                            <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                                    title="View"><i class="fas fa-eye"></i></a></li>
-                                                            <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                                    title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                            <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                                    title="Add to Wishlist"><i class="far fa-heart"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                        <a class="cart" href="#">Add to Cart</a>
+
+                                        @if (count($products) == 0)
+                                            <h2>Nothing to show</h2>
+                                        @else
+                                            @foreach ($products as $product)
+                                                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                                    <div class="products-single fix">
+                                                        <div class="box-img-hover">
+                                                            <div class="type-lb">
+                                                                <p class="sale">Sale</p>
+                                                            </div>
+                                                            <img src="{{ asset('assets/images/img-pro-02.jpg') }}"
+                                                                class="img-fluid" alt="Image">
+                                                            <div class="mask-icon">
+                                                                <a class="cart" href="#">Editar producto</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="why-text">
+                                                            <h4>{{ $product->name }}</h4>
+                                                            <h5>${{ $product->price }}</h5>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="why-text">
-                                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                                    <h5> $9.79</h5>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            @endforeach
+                                        @endif
+
                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="list-view">
-                                    <div class="list-view-box">
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-                                                <div class="products-single fix">
-                                                    <div class="box-img-hover">
-                                                        <div class="type-lb">
-                                                            <p class="new">New</p>
-                                                        </div>
-                                                        <img src="{{ asset('assets/images/img-pro-02.jpg') }}"
-                                                            class="img-fluid" alt="Image">
-                                                        <div class="mask-icon">
-                                                            <ul>
-                                                                <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                                        title="View"><i class="fas fa-eye"></i></a></li>
-                                                                <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                                        title="Compare"><i class="fas fa-sync-alt"></i></a>
-                                                                </li>
-                                                                <li><a href="#" data-toggle="tooltip" data-placement="right"
-                                                                        title="Add to Wishlist"><i
-                                                                            class="far fa-heart"></i></a></li>
-                                                            </ul>
 
+                                    @if (count($products) == 0)
+                                        <h2>Nothing to show</h2>
+                                    @else
+                                        @foreach ($products as $product)
+                                            <div class="list-view-box">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                                        <div class="products-single fix">
+                                                            <div class="box-img-hover">
+                                                                <div class="type-lb">
+                                                                    <p class="new">New</p>
+                                                                </div>
+                                                                <img src="{{ asset('assets/images/img-pro-02.jpg') }}"
+                                                                    class="img-fluid" alt="Image">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                                        <div class="why-text full-width">
+                                                            <h4>{{ $product->name }}</h4>
+                                                            <h5>${{ $product->price }}</h5>
+                                                            <p> {{ $product->description }}</p>
+                                                            <a class="btn hvr-hover" href="#">Editar producto</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
-                                                <div class="why-text full-width">
-                                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                                    <h5> <del>$ 60.00</del> $40.79</h5>
-                                                    <p>Integer tincidunt aliquet nibh vitae dictum. In turpis sapien,
-                                                        imperdiet quis magna nec, iaculis ultrices ante. Integer vitae
-                                                        suscipit nisi. Morbi dignissim risus sit amet orci porta, eget
-                                                        aliquam purus
-                                                        sollicitudin. Cras eu metus felis. Sed arcu arcu, sagittis in
-                                                        blandit eu, imperdiet sit amet eros. Donec accumsan nisi purus, quis
-                                                        euismod ex volutpat in. Vestibulum eleifend eros ac lobortis
-                                                        aliquet.
-                                                        Suspendisse at ipsum vel lacus vehicula blandit et sollicitudin
-                                                        quam. Praesent vulputate semper libero pulvinar consequat. Etiam ut
-                                                        placerat lectus.</p>
-                                                    <a class="btn hvr-hover" href="#">Add to Cart</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        @endforeach
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -174,12 +158,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="#" class="list-group-item list-group-item-action"> Grocery <small
-                                        class="text-muted">(150) </small></a>
-                                <a href="#" class="list-group-item list-group-item-action"> Grocery <small
-                                        class="text-muted">(11)</small></a>
-                                <a href="#" class="list-group-item list-group-item-action"> Grocery <small
-                                        class="text-muted">(22)</small></a>
                             </div>
                         </div>
                         <div class="filter-price-left">
@@ -202,11 +180,8 @@
     </div>
     <!-- End Shop Page -->
 
-    <!-- Button trigger modal -->
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <!-- Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -224,11 +199,12 @@
                         </div>
                         <div class="form-group">
                             <label for="price">Precio ($)</label>
-                            <input type="number" class="form-control" id="price" name="price" min="0" max="5000" placeholder="$300">
+                            <input type="number" class="form-control" id="price" name="price" min="0" max="5000"
+                                placeholder="$300">
                         </div>
                         <div class="form-group">
-                            <label for="categorie">Categoría</label>
-                            <select class="form-control" id="categorie" name="categorie">
+                            <label for="category">Categoría</label>
+                            <select class="form-control" id="category" name="category">
                                 <option selected disabled hidden>Selecciona una categoría</option>
                                 <option>1</option>
                                 <option>2</option>
@@ -237,8 +213,8 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Descripción</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"
-                                style="resize: none" placeholder="Delicioso"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3" style="resize: none"
+                                placeholder="Delicioso"></textarea>
                         </div>
                     </form>
                 </div>
