@@ -231,7 +231,7 @@
                         @endif
                         <input type="number"
                             class="form-control resettable {{ $errors->has('price') ? 'errorValidation' : '' }}" id="price"
-                            name="price" min="0" max="5000" placeholder="$300"
+                            name="price" min="0" max="5000" placeholder="$300" step="0.01"
                             value="{{ old('price') ?? $product->price ?? '' }}">
                     </div>
 
@@ -242,7 +242,10 @@
                         @endif
                         <select class="form-control {{ $errors->has('category_id') ? 'errorValidation' : '' }}"
                             id="category" name="category_id" value="2">
-                            <option selected disabled hidden>Selecciona una categoría</option>
+                            <option selected disabled hidden>
+                                {{ count($categories) == 0 ? "Es necesario crear una categoría" : "Selecciona una categoría" }}
+                            </option>
+
                             @foreach ($categories as $category)
                                 @if (old('category_id') == $category->id || (isset($product) && $product->category_id == $category->id))
                                     <option value="{{ $category->id }}" selected> {{ $category->name }} </option>

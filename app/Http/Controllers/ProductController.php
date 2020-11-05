@@ -32,7 +32,7 @@ class ProductController extends Controller
         $products = Product::with('categories')->get();
         $categories = Category::with('products')->get();
 
-        return view('productCrud', compact('products', 'categories'));
+        return view('shop.productCrud', compact('products', 'categories'));
     }
 
     /**
@@ -87,7 +87,7 @@ class ProductController extends Controller
         $products = Product::with('categories')->get();
         $categories = Category::with('products')->get();
 
-        return view('productCrud', compact('product', 'products', 'categories'));
+        return view('shop.productCrud', compact('product', 'products', 'categories'));
     }
 
     /**
