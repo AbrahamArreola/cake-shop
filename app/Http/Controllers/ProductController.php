@@ -8,6 +8,20 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    private $translations = [
+        'name' => 'Nombre',
+        'price' => 'Precio',
+        'category_id' => 'Categoría',
+        'description' => 'Descripción',
+        'image' => 'Image'
+    ];
+
+    private $customMessages = [
+        'required' => 'El campo :attribute es necesario',
+        'string' => 'El campo :attribute debe ser texto',
+        'numeric' => 'El campo :attribute debe ser un valor numérico'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -39,26 +53,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $translations = [
-            'name' => 'Nombre',
-            'price' => 'Precio',
-            'category_id' => 'Categoría',
-            'description' => 'Descripción',
-            'image' => 'Image'
-        ];
-
-        $customMessages = [
-            'required' => 'El campo :attribute es necesario',
-            'string' => 'El campo :attribute debe ser texto',
-            'numeric' => 'El campo :attribute debe ser un valor numérico'
-        ];
-
         $request->validate([
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
             'category_id' =>['required', 'numeric'],
             'description' => ['required', 'string']
-        ], $customMessages, $translations);
+        ], $this->customMessages, $this->translations);
 
         Product::create($request->all());
 
@@ -84,7 +84,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $products = Product::with('categories')->get();
+        $categories = Category::with('products')->get();
+
+        return view('productCrud', compact('product', 'products', 'categories'));
     }
 
     /**
@@ -96,7 +99,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string'],
+            'price' => ['required', 'numeric'],
+            'category_id' =>['required', 'numeric'],
+            'description' => ['required', 'string']
+        ], $this->customMessages, $this->translations);
+
+        Product::where('id', $product->id)->update($request->except('_token', '_method'));
+
+        return redirect('/product');
     }
 
     /**
