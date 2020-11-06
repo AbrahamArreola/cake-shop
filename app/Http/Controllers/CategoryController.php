@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -104,7 +105,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        foreach ($category->products as $product) {
+            Storage::delete('public/' . $product->image);
+        }
         $category->delete();
+
         return redirect('/product');
     }
 }

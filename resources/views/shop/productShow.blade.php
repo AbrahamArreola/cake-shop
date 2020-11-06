@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="product-info-display">
-            <img src="{{ asset('assets/images/img-pro-02.jpg') }}" alt="image">
+            <img src="{{ asset('storage/' . $product->image) }}" alt="image">
             <div class="product-right-display">
                 <div class="why-text full-width">
                     <h4> {{ $product->name }} </h4>

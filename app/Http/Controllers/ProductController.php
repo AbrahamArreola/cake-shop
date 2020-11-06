@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -13,13 +14,15 @@ class ProductController extends Controller
         'price' => 'Precio',
         'category_id' => 'Categoría',
         'description' => 'Descripción',
-        'image' => 'Image'
+        'image' => 'Imagen'
     ];
 
     private $customMessages = [
         'required' => 'El campo :attribute es necesario',
         'string' => 'El campo :attribute debe ser texto',
-        'numeric' => 'El campo :attribute debe ser un valor numérico'
+        'numeric' => 'El campo :attribute debe ser un valor numérico',
+        'mimes' => 'La imagen debe ser de tipo: jpeg, jpg, png, svg.',
+        'max' => 'La imagen no debe tener un tamaño mayor a 3mb'
     ];
 
     /**
@@ -57,10 +60,19 @@ class ProductController extends Controller
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
             'category_id' =>['required', 'numeric'],
-            'description' => ['required', 'string']
+            'description' => ['required', 'string'],
+            'image' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:3072']
         ], $this->customMessages, $this->translations);
 
-        Product::create($request->all());
+        $productData = $request->all();
+
+        if($request->hasFile('image')){
+            $filename = time() . '-' . $request->image->getClientOriginalName();
+            $path = $request->file('image')->storeAs('products', $filename, 'public');
+            $productData['image'] = $path;
+        }
+
+        Product::create($productData);
 
         return redirect('/product');
     }
@@ -103,10 +115,21 @@ class ProductController extends Controller
             'name' => ['required', 'string'],
             'price' => ['required', 'numeric'],
             'category_id' =>['required', 'numeric'],
-            'description' => ['required', 'string']
+            'description' => ['required', 'string'],
+            'image' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:3072']
         ], $this->customMessages, $this->translations);
 
-        Product::where('id', $product->id)->update($request->except('_token', '_method'));
+        $newProductData = $request->except(['_token', '_method']);
+
+        if($request->hasFile('image')){
+            Storage::delete('public/' . $product->image);
+
+            $filename = time() . '-' . $request->image->getClientOriginalName();
+            $path = $request->file('image')->storeAs('products', $filename, 'public');
+            $newProductData['image'] = $path;
+        }
+
+        Product::where('id', $product->id)->update($newProductData);
 
         return redirect('/product');
     }
@@ -119,7 +142,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
+        if(Storage::delete('public/' . $product->image)){
+            $product->delete();
+        }
+
         return redirect()->route('product.index');
     }
 }

@@ -78,7 +78,7 @@
                                                             <div class="type-lb">
                                                                 <p class="sale">Sale</p>
                                                             </div>
-                                                            <img src="{{ asset('assets/images/img-pro-02.jpg') }}"
+                                                            <img src="{{ asset('storage/' . $prod->image) }}"
                                                                 class="img-fluid" alt="Image">
                                                             <div class="mask-icon">
                                                                 <ul>
@@ -117,7 +117,7 @@
                                                                 <div class="type-lb">
                                                                     <p class="new">New</p>
                                                                 </div>
-                                                                <img src="{{ asset('assets/images/img-pro-02.jpg') }}"
+                                                                <img src="{{ asset('storage/' . $prod->image) }}"
                                                                     class="img-fluid" alt="Image">
                                                             </div>
                                                         </div>
@@ -172,7 +172,8 @@
                                                 <div class="list-group">
 
                                                     @foreach ($category->products as $prod)
-                                                        <a href="#" class="list-group-item list-group-item-action">
+                                                        <a href="{{ route('product.show', [$prod])}}"
+                                                           class="list-group-item list-group-item-action">
                                                             {{ $prod->name }}
                                                         </a>
                                                     @endforeach
@@ -221,10 +222,10 @@
                 <div class="modal-body">
 
                     @if (isset($product))
-                        <form action="{{ route('product.update', [$product]) }}" method="POST">
+                        <form action="{{ route('product.update', [$product]) }}" method="POST" enctype="multipart/form-data">
                             @method('put')
-                        @else
-                            <form action="{{ route('product.store') }}" method="POST">
+                    @else
+                            <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                     @endif
 
                     @csrf
@@ -281,8 +282,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="file">Imagen</label>
-                        <input type="file" class="form-control-file" id="file">
+                        <label for="image">Imagen</label>
+                        @error('image')
+                            <p class="text-danger"> ({{ $message }}) </p>
+                        @enderror
+                        <input type="file" class="form-control-file resettable" id="image" name="image"
+                            accept=".jpg,.png,.jpeg,.svg">
                     </div>
                     <button id="registerProductButton" type="submit" style="display: none"></button>
                     </form>
