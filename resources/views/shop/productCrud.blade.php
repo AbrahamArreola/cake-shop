@@ -10,10 +10,17 @@
     <script src="{{ asset('js/productCrud.js') }}"></script>
 
     @if ($errors->any() || isset($product))
-        <script>
-            $('#productModal').modal('show');
+        @if ($errors->has('categoryName'))
+            <script>
+                $('#categoryModal').modal('show');
 
-        </script>
+            </script>
+        @else
+            <script>
+                $('#productModal').modal('show');
+
+            </script>
+        @endif
     @endif
 
     @if (isset($product))
@@ -223,9 +230,9 @@
                     @csrf
                     <div class="form-group">
                         <label for="name">Nombre</label>
-                        @if ($errors->has('name'))
-                            <p class="text-danger"> ({{ $errors->first('name') }}) </p>
-                        @endif
+                        @error('name')
+                            <p class="text-danger"> ({{ $message }}) </p>
+                        @enderror
                         <input type="text"
                             class="form-control resettable {{ $errors->has('name') ? 'errorValidation' : '' }}" id="name"
                             name="name" placeholder="Pastel red velvet" value="{{ old('name') ?? ($product->name ?? '') }}">
@@ -233,9 +240,9 @@
 
                     <div class="form-group">
                         <label for="price">Precio ($)</label>
-                        @if ($errors->has('price'))
-                            <p class="text-danger"> ({{ $errors->first('price') }}) </p>
-                        @endif
+                        @error('price')
+                            <p class="text-danger"> ({{ $message }}) </p>
+                        @enderror
                         <input type="number"
                             class="form-control resettable {{ $errors->has('price') ? 'errorValidation' : '' }}" id="price"
                             name="price" min="0" max="5000" placeholder="$300" step="0.01"
@@ -265,9 +272,9 @@
 
                     <div class="form-group">
                         <label for="description">Descripción</label>
-                        @if ($errors->has('description'))
-                            <p class="text-danger"> ({{ $errors->first('description') }}) </p>
-                        @endif
+                        @error('description')
+                            <p class="text-danger"> ({{ $message }}) </p>
+                        @enderror
                         <textarea class="form-control resettable {{ $errors->has('description') ? 'errorValidation' : '' }}"
                             id="description" name="description" rows="3" style="resize: none"
                             placeholder="Delicioso">{{ old('description') ?? ($product->description ?? '') }}</textarea>
@@ -301,10 +308,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="add-category-form" action="">
-                        <input type="text" class="form-control">
-                        <button type="button" class="btn">Agregar categoría</button>
+                    <form id="add-category-form" action="{{ route('category.store') }}" method="POST">
+                        @csrf
+                        <input type="text" class="form-control" name="categoryName">
+                        <button type="submit" class="btn">Agregar categoría</button>
                     </form>
+                    @error('categoryName')
+                        <p class="text-danger"> ({{ $message }}) </p>
+                    @enderror
+
                     <div class="body-scroll-container">
                         <table class="table table-hover">
                             <thead class="thead-dark">

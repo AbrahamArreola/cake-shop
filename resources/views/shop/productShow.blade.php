@@ -12,7 +12,7 @@
 
     <div class="list-view-box">
         <div class="return-section">
-            <div class="items" onclick="window.history.back()">
+            <div class="items" onclick="window.location.replace('/product')">
                 <i class="fas fa-arrow-left"></i>
                 <p>Regresar</p>
             </div>
