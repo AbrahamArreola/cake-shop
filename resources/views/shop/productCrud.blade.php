@@ -10,7 +10,7 @@
     <script src="{{ asset('js/productCrud.js') }}"></script>
 
     @if ($errors->any() || isset($product))
-        @if ($errors->has('categoryName'))
+        @if ($errors->has('categoryName') || $errors->has('categoryColumnName'))
             <script>
                 $('#categoryModal').modal('show');
 
@@ -235,7 +235,7 @@
                         @enderror
                         <input type="text"
                             class="form-control resettable {{ $errors->has('name') ? 'errorValidation' : '' }}" id="name"
-                            name="name" placeholder="Pastel red velvet" value="{{ old('name') ?? ($product->name ?? '') }}">
+                            name="name" value="{{ old('name') ?? $product->name ?? '' }}">
                     </div>
 
                     <div class="form-group">
@@ -245,8 +245,8 @@
                         @enderror
                         <input type="number"
                             class="form-control resettable {{ $errors->has('price') ? 'errorValidation' : '' }}" id="price"
-                            name="price" min="0" max="5000" placeholder="$300" step="0.01"
-                            value="{{ old('price') ?? ($product->price ?? '') }}">
+                            name="price" min="0" max="5000" step="0.01"
+                            value="{{ old('price') ?? $product->price ?? '' }}">
                     </div>
 
                     <div class="form-group">
@@ -276,8 +276,8 @@
                             <p class="text-danger"> ({{ $message }}) </p>
                         @enderror
                         <textarea class="form-control resettable {{ $errors->has('description') ? 'errorValidation' : '' }}"
-                            id="description" name="description" rows="3" style="resize: none"
-                            placeholder="Delicioso">{{ old('description') ?? ($product->description ?? '') }}</textarea>
+                            id="description" name="description" rows="3"
+                            style="resize: none">{{ old('description') ?? $product->description ?? '' }}</textarea>
                     </div>
 
                     <div class="form-group">
@@ -322,25 +322,42 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">Categoría</th>
-                                    <th scope="col" style="width: 36%">Acciones</th>
+                                    <th scope="col" style="width: 10%">Acciones</th>
+                                    <th scope="col" style="width: 10%"></th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 @foreach ($categories as $category)
                                     <tr>
-                                        <td><input type="text" class="form-control" value="{{ $category->name }}"></td>
-                                        <td>
-                                            <button type="button" class="btn secondary"><i class="fa fa-refresh"
-                                                    aria-hidden="true"></i></button>
-                                            <button type="button" class="btn primary"><i class="fa fa-trash"
-                                                    aria-hidden="true"></i></button>
-                                        </td>
+                                        <form action="{{ route('category.update', [$category]) }}" method="POST">
+                                            @method('put')
+                                            @csrf
+                                            <td>
+                                                <input type="text" class="form-control" name="categoryColumnName"
+                                                    value="{{ $category->name }}">
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn secondary"><i class="fa fa-refresh"
+                                                        aria-hidden="true"></i></button>
+                                            </td>
+                                        </form>
+                                        <form action="{{ route('category.destroy', [$category]) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <td>
+                                                <button type="submit" class="btn primary"><i class="fa fa-trash"
+                                                        aria-hidden="true"></i></button>
+                                            </td>
+                                        </form>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
+                    @error('categoryColumnName')
+                        <p class="text-danger"> ({{ $message }}) </p>
+                    @enderror
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn">Editar</button>

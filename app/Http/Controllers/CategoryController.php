@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     private $translations = [
-        'categoryName' => 'Nombre'
+        'categoryName' => 'Nombre de categoría',
+        'categoryColumnName' => 'Nombre de categoría'
     ];
 
     private $customMessages = [
@@ -86,7 +87,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'categoryColumnName' => ['required', 'string']
+        ], $this->customMessages, $this->translations);
+
+        Category::where('id', $category->id)->update(['name' => $request->categoryColumnName]);
+
+        return redirect('/product');
     }
 
     /**
@@ -97,6 +104,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect('/product');
     }
 }
