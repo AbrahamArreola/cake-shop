@@ -76,8 +76,9 @@
                                                             <div class="mask-icon">
                                                                 <ul>
                                                                     <li><a href="{{ route('product.show', [$prod]) }}"
-                                                                        data-toggle="tooltip" data-placement="right" title="Ver">
-                                                                        <i class="fas fa-eye"></i></a></li>
+                                                                            data-toggle="tooltip" data-placement="right"
+                                                                            title="Ver">
+                                                                            <i class="fas fa-eye"></i></a></li>
                                                                 </ul>
                                                                 <a class="cart"
                                                                     href="{{ route('product.edit', [$prod->id]) }}">Editar
@@ -144,7 +145,8 @@
                             <div class="title-left">
                                 <h3>Categorías</h3>
                                 <i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="right"
-                                    title="Editar categorías" id="editCategoriesTrigger"></i>
+                                    title="Editar categorías" id="editCategoriesTrigger"
+                                    onclick="$(this).tooltip('hide');"></i>
                             </div>
                             <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men"
                                 data-children=".sub-men">
@@ -226,7 +228,7 @@
                         @endif
                         <input type="text"
                             class="form-control resettable {{ $errors->has('name') ? 'errorValidation' : '' }}" id="name"
-                            name="name" placeholder="Pastel red velvet" value="{{ old('name') ?? $product->name ?? '' }}">
+                            name="name" placeholder="Pastel red velvet" value="{{ old('name') ?? ($product->name ?? '') }}">
                     </div>
 
                     <div class="form-group">
@@ -237,7 +239,7 @@
                         <input type="number"
                             class="form-control resettable {{ $errors->has('price') ? 'errorValidation' : '' }}" id="price"
                             name="price" min="0" max="5000" placeholder="$300" step="0.01"
-                            value="{{ old('price') ?? $product->price ?? '' }}">
+                            value="{{ old('price') ?? ($product->price ?? '') }}">
                     </div>
 
                     <div class="form-group">
@@ -248,7 +250,7 @@
                         <select class="form-control {{ $errors->has('category_id') ? 'errorValidation' : '' }}"
                             id="category" name="category_id" value="2">
                             <option selected disabled hidden>
-                                {{ count($categories) == 0 ? "Es necesario crear una categoría" : "Selecciona una categoría" }}
+                                {{ count($categories) == 0 ? 'Es necesario crear una categoría' : 'Selecciona una categoría' }}
                             </option>
 
                             @foreach ($categories as $category)
@@ -268,7 +270,7 @@
                         @endif
                         <textarea class="form-control resettable {{ $errors->has('description') ? 'errorValidation' : '' }}"
                             id="description" name="description" rows="3" style="resize: none"
-                            placeholder="Delicioso">{{ old('description') ?? $product->description ?? '' }}</textarea>
+                            placeholder="Delicioso">{{ old('description') ?? ($product->description ?? '') }}</textarea>
                     </div>
 
                     <div class="form-group">
@@ -293,12 +295,40 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Editar categorías</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Categorías</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="add-category-form" action="">
+                        <input type="text" class="form-control">
+                        <button type="button" class="btn">Agregar categoría</button>
+                    </form>
+                    <div class="body-scroll-container">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col" style="width: 36%">Acciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach ($categories as $category)
+                                    <tr>
+                                        <td><input type="text" class="form-control" value="{{ $category->name }}"></td>
+                                        <td>
+                                            <button type="button" class="btn secondary"><i class="fa fa-refresh"
+                                                    aria-hidden="true"></i></button>
+                                            <button type="button" class="btn primary"><i class="fa fa-trash"
+                                                    aria-hidden="true"></i></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn">Editar</button>
