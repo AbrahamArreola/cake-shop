@@ -74,6 +74,11 @@
                                                             <img src="{{ asset('assets/images/img-pro-02.jpg') }}"
                                                                 class="img-fluid" alt="Image">
                                                             <div class="mask-icon">
+                                                                <ul>
+                                                                    <li><a href="{{ route('product.show', [$prod]) }}"
+                                                                        data-toggle="tooltip" data-placement="right" title="Ver">
+                                                                        <i class="fas fa-eye"></i></a></li>
+                                                                </ul>
                                                                 <a class="cart"
                                                                     href="{{ route('product.edit', [$prod->id]) }}">Editar
                                                                     producto</a>
