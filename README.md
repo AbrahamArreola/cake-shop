@@ -40,27 +40,27 @@ Para este proyecto se utiliza el framework Laravel, por lo que su instalación f
 
 1. Instalar las dependencias del proyecto con el siguiente comando.
 
-```php
-composer install
-```
+    ```php
+    composer install
+    ```
 
 2. Configurar el archivo .env.example incluido en el repositorio con sus respectivas credenciales de bases de datos, para después crear el archivo .env.
 
-```php
-cp .env.example .env
-```
+    ```php
+    cp .env.example .env
+    ```
 
 3. Generar la llave que provee seguridad al proyecto.
 
-```php
-php artisan key:generate
-```
+    ```php
+    php artisan key:generate
+    ```
 
 4. Finalmente ejecutar las migraciones para la configuración de la base de datos.
 
-```php
-php artisan migrate 
-```
+    ```php
+    php artisan migrate 
+    ```
 
 ## Requisito extra
 Para este proyecto se hace uso de almacenamiento de imágenes con ayuda del flySystem de Laravel de forma local, por lo que es necesario crear un enlace simbólico para el correcto funcionamiento de las imágenes con el siguiente comando.
@@ -68,3 +68,6 @@ Para este proyecto se hace uso de almacenamiento de imágenes con ayuda del flyS
 ```php
 php artisan storage:link
 ```
+
+## Arranque del proyecto
+Actualmente el proyecto se encuentra en fase de desarrollo por lo que para poder visualizar el avance hasta ahora es necesario acceder a la ruta **/product** del localhost.
