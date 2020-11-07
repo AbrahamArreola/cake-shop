@@ -1,61 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<center> <h1>Cupcake mío</h1> </center>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Cupcake mío es una marca no registrada la cual ofrece sus servicios de repostería a través de las redes sociales.
+En estas se ofrecen diversos productos como pasteles de diferentes sabores además de servicios de personalización a pedido del cliente
+para eventos como fiestas, bodas, etc.
 
-## About Laravel
+### Redes sociales
+- [Facebook](https://www.facebook.com/cupcakemio)
+- [Instagram](https://www.instagram.com/cupcakemio/)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Acerca de este proyecto
+Como parte del proyecto para la materia de Programación para internet, mi objetivo es realizar una página completamente funcional a través de una tienda en línea para la gestión de los servicios ofrecidos por esta marca, la cual facilite la visualización de los productos, además de ofrecer un entorno amigable para el contacto entre cliente y proveedor para la realización de pedidos.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Primera entrega (segundo proyecto)
+Para esta primer entrega se elaboró un CRUD con dos entidades de la base de datos las cuales son la de productos y categorías, y con las cuales fue posible la elaboración del módulo de alta de productos con el que un administrador es capaz de registrar productos en la pagina para su visualización en la tienda en línea.
+Estas dos entidades cuentan con la siguiente estructura:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Tabla categories
+| Campo      |    Tipo    |  Tamaño | Descripción |
+|:-----------|:----------:|:-------:|:------------|
+| id         | BIGINT     | 20      | Identificador del producto |
+| created_at | TIMESTAMP  |         | Fecha de creación |
+| updated_at | TIMESTAMP  |         | Fecha de actualización |
+| name       | VARCHAR    | 50      | Nombre de la categoría |
 
-## Learning Laravel
+### Tabla products
+| Campo      |    Tipo    |  Tamaño | Descripción |
+|:-----------|:----------:|:-------:|:------------|
+| id         | BIGINT     | 20      | Identificador del producto |
+| created_at | TIMESTAMP  |         | Fecha de creación |
+| updated_at | TIMESTAMP  |         | Fecha de actualización |
+| name       | VARCHAR    | 50      | Nombre del producto |
+| price      | DOUBLE     | 8,2     | Precio del producto |
+| description| TEXT       | 65535   | Breve descripción del producto |
+| image      | VARCHAR    | 255     | Imagen del producto |
+| category_id| BIGINT     | 29      | Llave foránea para relacionar el producto con una categoría de la tabla categories |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Pasos para el uso del proyecto
+Para este proyecto se utiliza el framework Laravel, por lo que su instalación forma parte primordial antes de dar seguimiento a los pasos descritos a continuación:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Instalar las dependencias del proyecto con el siguiente comando.
 
-## Laravel Sponsors
+```php
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. Configurar el archivo .env.example incluido en el repositorio con sus respectivas credenciales de bases de datos, para después crear el archivo .env.
 
-### Premium Partners
+```php
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+3. Generar la llave que provee seguridad al proyecto.
 
-## Contributing
+```php
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. Finalmente ejecutar las migraciones para la configuración de la base de datos.
 
-## Code of Conduct
+```php
+php artisan migrate 
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Requisito extra
+Para este proyecto se hace uso de almacenamiento de imágenes con ayuda del flySystem de Laravel de forma local, por lo que es necesario crear un enlace simbólico para el correcto funcionamiento de las imágenes con el siguiente comando.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```php
+php artisan storage:link
+```
