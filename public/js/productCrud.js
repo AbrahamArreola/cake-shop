@@ -7,3 +7,7 @@ $(".modal").on("hidden.bs.modal", function(){
 $("#editCategoriesTrigger").on("click", function(){
     $("#categoryModal").modal("show");
 });
+
+$('[data-toggle="tooltip"]').tooltip({
+    trigger : 'hover'
+});

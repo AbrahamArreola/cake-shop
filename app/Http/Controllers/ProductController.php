@@ -85,7 +85,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('shop.productShow', compact('product'));
+        $categories = Category::with('products')->get();
+
+        return view('shop.productShow', compact('product', 'categories'));
     }
 
     /**
@@ -96,10 +98,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $products = Product::with('categories')->get();
-        $categories = Category::with('products')->get();
-
-        return view('shop.productCrud', compact('product', 'products', 'categories'));
+        //
     }
 
     /**
@@ -111,27 +110,34 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([
-            'name' => ['required', 'string'],
-            'price' => ['required', 'numeric'],
-            'category_id' =>['required', 'numeric'],
-            'description' => ['required', 'string'],
-            'image' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:3072']
-        ], $this->customMessages, $this->translations);
-
-        $newProductData = $request->except(['_token', '_method']);
+        $newProductData = null;
 
         if($request->hasFile('image')){
+            $request->validate([
+                'image' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:3072']
+            ]);
+
             Storage::delete('public/' . $product->image);
 
+            $newProductData = $request->only(['image']);
             $filename = time() . '-' . $request->image->getClientOriginalName();
             $path = $request->file('image')->storeAs('products', $filename, 'public');
             $newProductData['image'] = $path;
         }
+        else{
+            $request->validate([
+                'name' => ['required', 'string'],
+                'price' => ['required', 'numeric'],
+                'category_id' =>['required', 'numeric'],
+                'description' => ['required', 'string']
+            ], $this->customMessages, $this->translations);
+
+            $newProductData = $request->except(['_token', '_method', 'image']);
+        }
 
         Product::where('id', $product->id)->update($newProductData);
 
-        return redirect('/product');
+        return redirect()->route('product.show', [$product]);
     }
 
     /**

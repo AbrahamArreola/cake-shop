@@ -977,8 +977,23 @@
 	 bottom: 0;
 	 right: 0;
 }
+.mask-icon a{
+    padding: 12px 14px !important;
+}
  .mask-icon ul li{
      background: #EE69A4;
+}
+.mask-icon button{
+    color: #ffffff;
+    padding: 5px 10px;
+    display: block;
+    background: #EE69A4;
+    border: none;
+    padding: 18px 20px;
+    cursor: pointer;
+}
+.mask-icon button:hover{
+    background: #000000;
 }
  .mask-icon ul li a{
      color: #ffffff;

@@ -7,28 +7,79 @@
     <link rel="stylesheet" href="{{ asset('css/productCrud.css') }}">
 @endsection
 
+@section('scriptFiles')
+    <script src="{{ asset('js/productCrud.js') }}"></script>
+
+    @if ($errors->any())
+        <script>
+            $('#productModal').modal('show');
+
+        </script>
+    @endif
+
+    <script>
+        $('#productModal').on('hidden.bs.modal', function() {
+            window.location.href = '{{ route('product.show', [$product]) }}'
+        });
+
+    </script>
+@endsection
+
 @section('content')
     @include('layouts.sectionTitle', ['section' => 'Tienda'])
 
-    <div class="list-view-box">
-        <div class="return-section">
-            <div class="items" onclick="window.location.replace('/product')">
-                <i class="fas fa-arrow-left"></i>
-                <p>Regresar</p>
-            </div>
+    <div class="return-section">
+        <div class="items" onclick="window.location.replace('/product')">
+            <i class="fas fa-arrow-left"></i>
+            <p>Regresar</p>
         </div>
-        <div class="product-info-display">
-            <img src="{{ asset('storage/' . $product->image) }}" alt="image">
-            <div class="product-right-display">
-                <div class="why-text full-width">
-                    <h4> {{ $product->name }} </h4>
-                    <h5>${{ $product->price }}</h5>
-                    <p> {{ $product->description }} </p>
-                    <button class="btn hvr-hover" data-toggle="modal" data-target="#confirmModal">Eliminar producto</button>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade show active" id="list-view">
+        <div class="list-view-box">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="new">New</p>
+                            </div>
+                            <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid" alt="Image">
+                            <div class="mask-icon">
+                                <ul>
+                                    <form action="{{ route('product.update', [$product]) }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('put')
+                                        <input type="file" id="image" name="image" style="display: none"
+                                            accept=".jpg,.png,.jpeg,.svg" onchange="this.form.submit()">
+
+                                        <li><button type="button" data-toggle="tooltip" data-placement="right"
+                                                title="Modificar imagen"
+                                                onclick="document.getElementById('image').click()"><i
+                                                    class=" fas fa-camera"></i></button></li>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                    <div class="why-text full-width">
+                        <h4>{{ $product->name }}</h4>
+                        <h5>${{ $product->price }}</h5>
+                        <p>{{ $product->description }}</p>
+                        <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Editar
+                            producto</button>
+                        <button class="btn hvr-hover delete" data-toggle="modal" data-target="#confirmModal">Eliminar
+                            producto</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    @include('shop.productForm')
 
     {{-- Confirmation modal --}}
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
