@@ -190,7 +190,7 @@
 	   Slider Range
 	   ................................................. */
 
-	$(function() {
+	/* $(function() {
 		$("#slider-range").slider({
 			range: true,
 			min: 0,
@@ -202,7 +202,7 @@
 		});
 		$("#amount").val("$" + $("#slider-range").slider("values", 0) +
 			" - $" + $("#slider-range").slider("values", 1));
-	});
+	}); */
 
 	/* ..............................................
 	   NiceScroll

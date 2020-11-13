@@ -11,3 +11,7 @@ $("#editCategoriesTrigger").on("click", function(){
 $('[data-toggle="tooltip"]').tooltip({
     trigger : 'hover'
 });
+
+$("#priceRange").on("input", function(){
+    $("#amount").val("$0 - $" + $("#priceRange").val());
+});

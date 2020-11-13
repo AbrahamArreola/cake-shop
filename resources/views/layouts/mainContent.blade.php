@@ -17,6 +17,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    @livewireStyles
+
     @yield('styleFiles')
 </head>
 
@@ -198,6 +200,8 @@
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+
+    @livewireScripts
 
     @yield('scriptFiles')
 </body>
