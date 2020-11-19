@@ -17,7 +17,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    @livewireStyles
+     <!-- Styles -->
+     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+     @livewireStyles
+
+     <!-- Scripts -->
+     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
 
     @yield('styleFiles')
 </head>
@@ -181,6 +187,8 @@
         </div>
     </footer>
     <!-- End Footer  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
     <!-- ALL JS FILES -->
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>

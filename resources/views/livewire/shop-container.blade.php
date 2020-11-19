@@ -8,7 +8,6 @@
                         <div class="col-12 col-sm-8 text-center text-sm-left">
                             <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Agregar
                                 producto</button>
-                            <p>Mostrando los resultados</p>
                         </div>
                         <div class="col-12 col-sm-4 text-center text-sm-right">
                             <ul class="nav nav-tabs ml-auto">
