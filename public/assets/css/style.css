@@ -401,6 +401,10 @@
 }
  @media (max-width: 992px) {
     /* Navbar General ------*/
+     nav.navbar .navbar-brand img.logo{
+         width: 100px;
+         height: 100px;
+    }
      nav.navbar .navbar-brand{
          margin-top: 0;
          position: relative;

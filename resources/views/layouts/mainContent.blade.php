@@ -17,13 +17,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-     <!-- Styles -->
-     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-     @livewireStyles
+    @livewireStyles
 
-     <!-- Scripts -->
-     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
 
     @yield('styleFiles')
 </head>
@@ -70,20 +70,36 @@
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
+                <div class="attr-nav {{ Auth::user() ? '' : 'hidden' }}">
                     <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
+                        <li class="side-menu md:ml-5">
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="badge">3</span>
                                 <p>Carrito</p>
                             </a>
                         </li>
+                        @auth
+                            @livewire('profile-menu')
+                        @endauth
                     </ul>
                 </div>
                 <!-- End Atribute Navigation -->
+
+                @if (!Auth::user())
+                    <ul
+                        class="relative right-3 bottom-3 md:top-1 lg:flex w-1/5 md:w-auto md:text-base font-bold text-center">
+                        <li class="pr-3 md:pb-2.5"><a
+                                class="p-2 text-cm-main-pink md:text-white md:bg-cm-main-pink rounded-md hover:bg-cm-pink2"
+                                href="{{ route('login') }}">Login</a>
+                        </li>
+                        <li><a class="p-2 text-cm-cherry md:text-white md:bg-cm-cherry rounded-md hover:bg-red-400"
+                                href="{{ route('register') }}">Registrarse</a>
+                        </li>
+                    </ul>
+                @endif
             </div>
+
             <!-- Start Side Menu -->
             <div class="side">
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
@@ -116,18 +132,6 @@
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Buscar">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     @yield('content')
 

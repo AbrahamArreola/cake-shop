@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('product.index');
 });
 
 /* Route::get('/product-registration', function() {
