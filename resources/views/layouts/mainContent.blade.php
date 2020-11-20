@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
     <!-- Bootstrap CSS -->
@@ -16,6 +17,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -53,7 +57,8 @@
                         <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link"
                                 href="about.html">¿Quiénes somos?</a></li>
                         <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Tienda</a>
+                            <a href="{{ route('product.index') }}" class="nav-link dropdown-toggle arrow"
+                                data-toggle="dropdown">Tienda</a>
                             <ul class="dropdown-menu">
                                 <li><a href="shop.html">Sidebar Shop</a></li>
                                 <li><a href="shop-detail.html">Shop Detail</a></li>
@@ -91,7 +96,7 @@
                         class="relative right-3 bottom-3 md:top-1 lg:flex w-1/5 md:w-auto md:text-base font-bold text-center">
                         <li class="pr-3 md:pb-2.5"><a
                                 class="p-2 text-cm-main-pink md:text-white md:bg-cm-main-pink rounded-md hover:bg-cm-pink2"
-                                href="{{ route('login') }}">Login</a>
+                                href="{{ route('login') }}">Entrar</a>
                         </li>
                         <li><a class="p-2 text-cm-cherry md:text-white md:bg-cm-cherry rounded-md hover:bg-red-400"
                                 href="{{ route('register') }}">Registrarse</a>
