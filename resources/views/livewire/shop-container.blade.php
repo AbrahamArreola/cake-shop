@@ -6,8 +6,10 @@
                 <div class="right-product-box">
                     <div class="product-item-filter row">
                         <div class="col-12 col-sm-8 text-center text-sm-left">
-                            <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Agregar
-                                producto</button>
+                            @if (Auth::user() && Auth::user()->is_admin)
+                                <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Agregar
+                                    producto</button>
+                            @endif
                         </div>
                         <div class="col-12 col-sm-4 text-center text-sm-right">
                             <ul class="nav nav-tabs ml-auto">
@@ -150,7 +152,8 @@
                         </div>
                         <div class="price-box-slider">
                             <div id="slider">
-                                <input type="range" id="priceRange" min="0" max="2000" style="width: 100%" wire:model="priceValue">
+                                <input type="range" id="priceRange" min="0" max="2000" style="width: 100%"
+                                    wire:model="priceValue">
                             </div>
                             <p>
                                 <input type="text" id="amount" readonly value="$0 - $1000"

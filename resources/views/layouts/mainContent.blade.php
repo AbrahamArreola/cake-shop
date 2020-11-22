@@ -51,7 +51,7 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <ul class="nav navbar-nav ml-auto mr-28 lg:mr-44" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item {{ $menu == 'menu1' ? 'active' : '' }}"><a class="nav-link"
                                 href="index.html">Inicio</a></li>
                         <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link"
@@ -75,9 +75,9 @@
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav {{ Auth::user() ? '' : 'hidden' }}">
+                <div class="absolute right-6 attr-nav {{ Auth::user() ? '' : 'hidden' }}">
                     <ul>
-                        <li class="side-menu md:ml-5">
+                        <li class="side-menu">
                             <a href="#">
                                 <i class="fa fa-shopping-bag"></i>
                                 <span class="badge">3</span>
@@ -93,7 +93,7 @@
 
                 @if (!Auth::user())
                     <ul
-                        class="relative right-3 bottom-3 md:top-1 lg:flex w-1/5 md:w-auto md:text-base font-bold text-center">
+                        class="absolute top-5 lg:top-14 right-3 bottom-3 lg:flex w-1/5 md:w-auto md:text-base font-bold text-center">
                         <li class="pr-3 md:pb-2.5"><a
                                 class="p-2 text-cm-main-pink md:text-white md:bg-cm-main-pink rounded-md hover:bg-cm-pink2"
                                 href="{{ route('login') }}">Entrar</a>
