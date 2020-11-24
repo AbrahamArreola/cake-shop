@@ -11,13 +11,14 @@ class ShopContainer extends Component
     public $categories;
 
     public $searchString;
-    public $priceValue;
+    public $priceValue = 1000;
+
+    public $maxDays = 3;
 
     public function mount($products, $categories)
     {
         $this->products = $products;
         $this->categories = $categories;
-        $this->priceValue = 1000;
     }
 
     public function render()

@@ -6,7 +6,7 @@
                 <div class="right-product-box">
                     <div class="product-item-filter row">
                         <div class="col-12 col-sm-8 text-center text-sm-left">
-                            @if (Auth::user() && Auth::user()->is_admin)
+                            @if (Auth::user() && Auth::user()->role->name == 'admin')
                                 <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Agregar
                                     producto</button>
                             @endif
@@ -31,14 +31,20 @@
                                 <div class="row">
 
                                     @if (count($products) == 0)
-                                        <h2>Nothing to show</h2>
+                                        <h2>No hay productos que mostrar</h2>
                                     @else
                                         @foreach ($products as $prod)
+                                            @php
+                                                $productDate = new DateTime($prod->created_at);
+                                                $currentDate = new DateTime(date('Y-m-d H:i:s'));
+                                                $daysDiff = $productDate->diff($currentDate)->days;
+                                            @endphp
+
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                                 <div class="products-single fix">
                                                     <div class="box-img-hover">
                                                         <div class="type-lb">
-                                                            <p class="sale">Sale</p>
+                                                            <p class="sale">{{ $daysDiff <= $maxDays ? 'New' : 'En venta' }}</p>
                                                         </div>
                                                         <img src="{{ asset('storage/' . $prod->image) }}"
                                                             class="img-fluid" alt="Image">
@@ -65,9 +71,15 @@
                             <div role="tabpanel" class="tab-pane fade" id="list-view">
 
                                 @if (count($products) == 0)
-                                    <h2>Nothing to show</h2>
+                                    <h2>No hay que categorías que mostrar</h2>
                                 @else
                                     @foreach ($products as $prod)
+                                        @php
+                                            $productDate = new DateTime($prod->created_at);
+                                            $currentDate = new DateTime(date('Y-m-d H:i:s'));
+                                            $daysDiff = $productDate->diff($currentDate)->days;
+                                        @endphp
+
                                         <div class="list-view-box">
                                             <div class="row">
                                                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
@@ -109,9 +121,11 @@
                     <div class="filter-sidebar-left">
                         <div class="title-left">
                             <h3>Categorías</h3>
-                            <i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="right"
-                                title="Editar categorías" id="editCategoriesTrigger"
-                                onclick="$(this).tooltip('hide');"></i>
+                            @if (Auth::user() && Auth::user()->role->name == 'admin')
+                                <i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="right"
+                                    title="Editar categorías" id="editCategoriesTrigger"
+                                    onclick="$(this).tooltip('hide');"></i>
+                            @endif
                         </div>
                         <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men"
                             data-children=".sub-men">
