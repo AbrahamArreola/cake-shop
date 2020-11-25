@@ -19,6 +19,11 @@ Route::get('/', function () {
     return redirect()->route('product.index');
 });
 
+/* Admin routes */
+Route::middleware(['auth:sanctum', 'verified'])->get('admin/panel', function(){
+    return view('adminSection');
+})->name('adminPanel');
+
 /* Route::get('/product-registration', function() {
     return view('productCrud');
 }); */
@@ -26,6 +31,6 @@ Route::get('/', function () {
 Route::resource('product', ProductController::class);
 Route::resource('category', CategoryController::class);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+/* Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->name('dashboard'); */

@@ -67,6 +67,25 @@
                 <div class="border-t border-gray-100"></div>
             @endif
 
+            <div class="border-t border-gray-100"></div>
+
+            {{-- Admin options --}}
+            @if (Auth::user()->role->name == "admin")
+                <div class="block px-4 py-2 text-xs text-gray-400">
+                    {{ __('Administrador') }}
+                </div>
+
+                <x-jet-dropdown-link href="{{ route('adminPanel') }}">
+                    {{ __('Gestionar administradores') }}
+                </x-jet-dropdown-link>
+
+                <x-jet-dropdown-link href="#">
+                    {{ __('Gestionar pedidos') }}
+                </x-jet-dropdown-link>
+
+                <div class="border-t border-gray-100"></div>
+            @endif
+
             <!-- Authentication -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
