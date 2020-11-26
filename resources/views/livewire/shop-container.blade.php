@@ -46,7 +46,7 @@
                                                         <div class="type-lb">
                                                             <p class="sale">{{ $daysDiff <= $maxDays ? 'New' : 'En venta' }}</p>
                                                         </div>
-                                                        <img src="{{ asset('storage/' . $prod->image) }}"
+                                                        <img src="{{ asset('storage/products/' . $prod->image) }}"
                                                             class="img-fluid" alt="Image">
                                                         <div class="mask-icon">
                                                             <ul>
@@ -71,7 +71,7 @@
                             <div role="tabpanel" class="tab-pane fade" id="list-view">
 
                                 @if (count($products) == 0)
-                                    <h2>No hay que categorías que mostrar</h2>
+                                    <h2>No hay productos que mostrar</h2>
                                 @else
                                     @foreach ($products as $prod)
                                         @php
@@ -88,7 +88,7 @@
                                                             <div class="type-lb">
                                                                 <p class="new">New</p>
                                                             </div>
-                                                            <img src="{{ asset('storage/' . $prod->image) }}"
+                                                            <img src="{{ asset('storage/products/' . $prod->image) }}"
                                                                 class="img-fluid" alt="Image">
                                                         </div>
                                                     </div>
@@ -131,7 +131,7 @@
                             data-children=".sub-men">
 
                             @if (count($categories) == 0)
-                                <p>Nothing to show</p>
+                                <p>No hay categorías que mostrar</p>
                             @else
                                 @foreach ($categories as $category)
                                     <div class="list-group-collapse sub-men">

@@ -68,8 +68,8 @@ class ProductController extends Controller
 
         if($request->hasFile('image')){
             $filename = time() . '-' . $request->image->getClientOriginalName();
-            $path = $request->file('image')->storeAs('products', $filename, 'public');
-            $productData['image'] = $path;
+            $request->file('image')->storeAs('products', $filename, 'public');
+            $productData['image'] = $filename;
         }
 
         Product::create($productData);
@@ -121,8 +121,8 @@ class ProductController extends Controller
 
             $newProductData = $request->only(['image']);
             $filename = time() . '-' . $request->image->getClientOriginalName();
-            $path = $request->file('image')->storeAs('products', $filename, 'public');
-            $newProductData['image'] = $path;
+            $request->file('image')->storeAs('products', $filename, 'public');
+            $newProductData['image'] = $filename;
         }
         else{
             $request->validate([
@@ -148,7 +148,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if(Storage::delete('public/' . $product->image)){
+        if(Storage::delete('public/products/' . $product->image)){
             $product->delete();
         }
 
