@@ -24,6 +24,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('admin/panel', function(){
     return view('adminSection');
 })->name('adminPanel');
 
+/* Shop routes */
+Route::get('shop/cart', function () {
+    return view('shop.shopCart');
+});
+
 /* Route::get('/product-registration', function() {
     return view('productCrud');
 }); */

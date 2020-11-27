@@ -1,5 +1,5 @@
 {{-- Start Shop Page --}}
-<div class="shop-box-inner">
+<div class="shop-box-inner" x-data="{showSuccess: false}">
     <div class="container">
         <div class="row">
             <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
@@ -35,21 +35,33 @@
                                     @else
                                         @foreach ($products as $prod)
                                             @php
-                                                $productDate = new DateTime($prod->created_at);
-                                                $currentDate = new DateTime(date('Y-m-d H:i:s'));
-                                                $daysDiff = $productDate->diff($currentDate)->days;
+                                            $productDate = new DateTime($prod->created_at);
+                                            $currentDate = new DateTime(date('Y-m-d H:i:s'));
+                                            $daysDiff = $productDate->diff($currentDate)->days;
                                             @endphp
 
                                             <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                                                 <div class="products-single fix">
                                                     <div class="box-img-hover">
                                                         <div class="type-lb">
-                                                            <p class="sale">{{ $daysDiff <= $maxDays ? 'New' : 'En venta' }}</p>
+                                                            <p class="sale">
+                                                                {{ $daysDiff <= $maxDays ? 'New' : 'En venta' }}
+                                                            </p>
                                                         </div>
                                                         <img src="{{ asset('storage/products/' . $prod->image) }}"
                                                             class="img-fluid" alt="Image">
                                                         <div class="mask-icon">
                                                             <ul>
+                                                                @if (Auth::user() && Auth::user()->role->name == 'client')
+                                                                    <li><a x-on:click="showSuccess=true; setTimeout(() => { showSuccess = false; }, 1000);"
+                                                                            wire:click="addToCart({{ $prod->id }})"
+                                                                            class="cursor-pointer" data-toggle="tooltip"
+                                                                            data-placement="right"
+                                                                            title="Agregar al carrito">
+                                                                            <i
+                                                                                class="fas fa-shopping-cart text-white"></i></a>
+                                                                    </li>
+                                                                @endif
                                                                 <li><a href="{{ route('product.show', [$prod]) }}"
                                                                         data-toggle="tooltip" data-placement="right"
                                                                         title="Ver">
@@ -75,9 +87,9 @@
                                 @else
                                     @foreach ($products as $prod)
                                         @php
-                                            $productDate = new DateTime($prod->created_at);
-                                            $currentDate = new DateTime(date('Y-m-d H:i:s'));
-                                            $daysDiff = $productDate->diff($currentDate)->days;
+                                        $productDate = new DateTime($prod->created_at);
+                                        $currentDate = new DateTime(date('Y-m-d H:i:s'));
+                                        $daysDiff = $productDate->diff($currentDate)->days;
                                         @endphp
 
                                         <div class="list-view-box">
@@ -177,6 +189,21 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div x-show.transition.opacity.out.duration.1500ms="showSuccess"
+        class=" fixed left-0 bottom-0 z-50 w-1/3 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
+        role="alert">
+        <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20">
+                    <path
+                        d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                </svg></div>
+            <div>
+                <p class="font-bold">Producto agregado al carrito</p>
             </div>
         </div>
     </div>
