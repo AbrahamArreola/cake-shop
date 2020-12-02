@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 /* Admin routes */
-Route::middleware(['auth:sanctum', 'verified'])->get('admin/panel', function(){
+Route::get('admin/panel', function () {
     return view('adminSection');
 })->name('adminPanel');
 

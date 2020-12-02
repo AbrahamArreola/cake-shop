@@ -71,10 +71,10 @@
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="absolute right-6 attr-nav {{ Auth::user() ? '' : 'hidden' }}">
-                    <ul>
-                        @if (Auth::user())
-                            @if (Auth::user()->role->name == 'admin')
+                @auth
+                    <div class="absolute right-6 attr-nav">
+                        <ul>
+                            @can('admin-settings')
                                 <li class="side-menu">
                                     <a href="#">
                                         <i class="fas fa-bell"></i>
@@ -82,15 +82,15 @@
                                         <p>Pedidos</p>
                                     </a>
                                 </li>
-                            @else
+
+                            @elsecannot('admin-settings')
                                 @livewire('cart-icon')
-                            @endif
-                        @endif
-                        @auth
+                            @endcan
+
                             @livewire('profile-menu')
-                        @endauth
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                @endauth
                 <!-- End Atribute Navigation -->
 
                 @if (!Auth::user())
@@ -108,14 +108,14 @@
             </div>
 
             <!-- Start Side Menu -->
-            @if (Auth::user())
+            @auth
                 <div class="side">
                     <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                     <li class="cart-box">
                         @livewire('side-shop-cart')
                     </li>
                 </div>
-            @endif
+            @endauth
             <!-- End Side Menu -->
         </nav>
         <!-- End Navigation -->

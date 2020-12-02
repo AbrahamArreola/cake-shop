@@ -6,10 +6,10 @@
                 <div class="right-product-box">
                     <div class="product-item-filter row">
                         <div class="col-12 col-sm-8 text-center text-sm-left">
-                            @if (Auth::user() && Auth::user()->role->name == 'admin')
+                            @can('admin-settings')
                                 <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Agregar
                                     producto</button>
-                            @endif
+                            @endcan
                         </div>
                         <div class="col-12 col-sm-4 text-center text-sm-right">
                             <ul class="nav nav-tabs ml-auto">
@@ -45,14 +45,14 @@
                                                     <div class="box-img-hover">
                                                         <div class="type-lb">
                                                             <p class="sale">
-                                                                {{ $daysDiff <= $maxDays ? 'New' : 'En venta' }}
+                                                                {{ $daysDiff <= $maxDays ? 'Nuevo' : 'En venta' }}
                                                             </p>
                                                         </div>
                                                         <img src="{{ asset('storage/products/' . $prod->image) }}"
                                                             class="img-fluid" alt="Image">
                                                         <div class="mask-icon">
                                                             <ul>
-                                                                @if (Auth::user() && Auth::user()->role->name == 'client')
+                                                                @can('client-settings')
                                                                     <li><a x-on:click="showSuccess=true; setTimeout(() => { showSuccess = false; }, 1000);"
                                                                             wire:click="addToCart({{ $prod->id }})"
                                                                             class="cursor-pointer" data-toggle="tooltip"
@@ -61,7 +61,7 @@
                                                                             <i
                                                                                 class="fas fa-shopping-cart text-white"></i></a>
                                                                     </li>
-                                                                @endif
+                                                                @endcan
                                                                 <li><a href="{{ route('product.show', [$prod]) }}"
                                                                         data-toggle="tooltip" data-placement="right"
                                                                         title="Ver">
@@ -98,7 +98,9 @@
                                                     <div class="products-single fix">
                                                         <div class="box-img-hover">
                                                             <div class="type-lb">
-                                                                <p class="new">New</p>
+                                                                <p class="new">
+                                                                    {{ $daysDiff <= $maxDays ? 'Nuevo' : 'En venta' }}
+                                                                </p>
                                                             </div>
                                                             <img src="{{ asset('storage/products/' . $prod->image) }}"
                                                                 class="img-fluid" alt="Image">
@@ -133,11 +135,11 @@
                     <div class="filter-sidebar-left">
                         <div class="title-left">
                             <h3>Categorías</h3>
-                            @if (Auth::user() && Auth::user()->role->name == 'admin')
+                            @can('admin-settings')
                                 <i class="fa fa-pencil" aria-hidden="true" data-toggle="tooltip" data-placement="right"
                                     title="Editar categorías" id="editCategoriesTrigger"
                                     onclick="$(this).tooltip('hide');"></i>
-                            @endif
+                            @endcan
                         </div>
                         <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men"
                             data-children=".sub-men">
