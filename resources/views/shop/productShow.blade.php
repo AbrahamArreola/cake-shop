@@ -29,7 +29,7 @@
     @include('layouts.sectionTitle', ['section' => 'Tienda'])
 
     <div class="return-section">
-        <div class="items" onclick="window.location.replace('/product')">
+        <div class="items" onclick="window.location.replace('{{ url()->previous() }}')">
             <i class="fas fa-arrow-left"></i>
             <p>Regresar</p>
         </div>

@@ -13,7 +13,7 @@ class CartIcon extends Component
 
     public function render()
     {
-        $nProducts = Session::has('products') ? count(Session::get('products')) : '';
+        $nProducts = Session::has('products') ? count(Session::get('products')) : 0;
 
         return view('livewire.cart-icon', compact('nProducts'));
     }

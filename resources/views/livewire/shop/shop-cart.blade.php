@@ -12,7 +12,7 @@
                                 <th>Precio</th>
                                 <th>Cantidad</th>
                                 <th>Total</th>
-                                <th>Remover</th>
+                                <th class="text-center">Remover</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@
                                             wire:input='updateProductAmount({{ $product->id }},$event.target.value)'
                                             class="c-input-text qty text"></td>
                                     <td class="total-pr">
-                                        <p>${{ $productAmount * $product->price }}</p>
+                                        <p class="w-16 m-0">${{ $productAmount * $product->price }}</p>
                                     </td>
                                     <td class="remove-pr">
                                         <button class="focus:outline-none"
@@ -88,8 +88,8 @@
                     <hr>
                 </div>
             </div>
-            <div class="col-8 d-flex shopping-box py-2"><a href="checkout.html"
-                    class="ml-auto btn hvr-hover">Checkout</a> </div>
+            <div class="col-8 d-flex shopping-box py-2"><button
+                    class="ml-auto btn hvr-hover text-white font-semibold" wire:click="makeOrder">Realizar pedido</button> </div>
         </div>
     </div>
 </div>
