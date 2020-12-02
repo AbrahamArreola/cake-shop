@@ -40,10 +40,9 @@ class ShopContainer extends Component
     public function addToCart($productId)
     {
         $products = Session::has('products') ? Session::get('products') : [];
+        $products[$productId] = 1;
 
-        if(!in_array($productId, $products)){
-            Session::push('products', $productId);
-            $this->emit('cart:update');
-        }
+        Session::put('products', $products);
+        $this->emit('cart:update');
     }
 }

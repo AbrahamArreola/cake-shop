@@ -14,12 +14,12 @@ class SideShopCart extends Component
 
     public function render()
     {
-        $productsIds = Session::has('products') ? Session::get('products') : [];
+        $productsDict = Session::has('products') ? Session::get('products') : [];
 
         $products = [];
 
-        foreach($productsIds as $product){
-            array_push($products, Product::find($product));
+        foreach($productsDict as $key => $value){
+            array_push($products, Product::find($key));
         }
 
         return view('livewire.side-shop-cart', compact('products'));

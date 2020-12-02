@@ -26,7 +26,7 @@ Route::get('admin/panel', function () {
 
 /* Shop routes */
 Route::get('shop/cart', function () {
-    return view('shop.shopCart');
+    return view('shop.shopProducts');
 });
 
 /* Route::get('/product-registration', function() {
