@@ -106,7 +106,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         foreach ($category->products as $product) {
-            Storage::delete('public/' . $product->image);
+            Storage::delete('public/products/' . $product->image);
         }
         $category->delete();
 

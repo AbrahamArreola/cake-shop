@@ -16,9 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function () {
-    return redirect('/product');
+    return redirect()->route('product.index');
 });
 
+
+/* Admin routes */
+Route::get('admin/panel', function () {
+    return view('adminSection');
+})->name('adminPanel');
+
+/* Shop routes */
+Route::get('shop/cart', function () {
+    return view('shop.shopProducts');
+})->name('shopCart');
 
 Route::get('/index',[MainController::class, 'home ']);
 
@@ -34,6 +44,6 @@ Route::resource('product', ProductController::class);
 Route::resource('category', CategoryController::class);
 //Route::resource('about', MainController::class);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+/* Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->name('dashboard'); */

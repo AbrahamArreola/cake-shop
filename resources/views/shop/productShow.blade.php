@@ -29,7 +29,7 @@
     @include('layouts.sectionTitle', ['section' => 'Tienda'])
 
     <div class="return-section">
-        <div class="items" onclick="window.location.replace('/product')">
+        <div class="items" onclick="window.location.replace('{{ url()->previous() }}')">
             <i class="fas fa-arrow-left"></i>
             <p>Regresar</p>
         </div>
@@ -41,26 +41,25 @@
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="products-single fix">
                         <div class="box-img-hover">
-                            <div class="type-lb">
-                                <p class="new">New</p>
-                            </div>
-                            <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid" alt="Image">
-                            <div class="mask-icon">
-                                <ul>
-                                    <form action="{{ route('product.update', [$product]) }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('put')
-                                        <input type="file" id="image" name="image" style="display: none"
-                                            accept=".jpg,.png,.jpeg,.svg" onchange="this.form.submit()">
+                            <img src="{{ asset('storage/products/' . $product->image) }}" class="img-fluid" alt="Image">
+                            @if (Auth::user() && Auth::user()->role->name == 'admin')
+                                <div class="mask-icon">
+                                    <ul>
+                                        <form action="{{ route('product.update', [$product]) }}" method="POST"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            @method('put')
+                                            <input type="file" id="image" name="image" style="display: none"
+                                                accept=".jpg,.png,.jpeg,.svg" onchange="this.form.submit()">
 
-                                        <li><button type="button" data-toggle="tooltip" data-placement="right"
-                                                title="Modificar imagen"
-                                                onclick="document.getElementById('image').click()"><i
-                                                    class=" fas fa-camera"></i></button></li>
-                                    </form>
-                                </ul>
-                            </div>
+                                            <li><button type="button" data-toggle="tooltip" data-placement="right"
+                                                    title="Modificar imagen"
+                                                    onclick="document.getElementById('image').click()"><i
+                                                        class=" fas fa-camera"></i></button></li>
+                                        </form>
+                                    </ul>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -69,10 +68,17 @@
                         <h4>{{ $product->name }}</h4>
                         <h5>${{ $product->price }}</h5>
                         <p>{{ $product->description }}</p>
-                        <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Editar
-                            producto</button>
-                        <button class="btn hvr-hover delete" data-toggle="modal" data-target="#confirmModal">Eliminar
-                            producto</button>
+                        @if (Auth::user())
+                            @if (Auth::user()->role->name == 'admin')
+                                <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Editar
+                                    producto</button>
+                                <button class="btn hvr-hover delete" data-toggle="modal"
+                                    data-target="#confirmModal">Eliminar
+                                    producto</button>
+                            @else
+                                <button class="btn hvr-hover">Agregar al carrito</button>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
