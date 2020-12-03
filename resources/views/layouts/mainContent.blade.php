@@ -53,9 +53,9 @@
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto mr-28 lg:mr-44" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item {{ $menu == 'menu1' ? 'active' : '' }}"><a class="nav-link"
-                                href="index.html">Inicio</a></li>
+                                href="index">Inicio</a></li>
                         <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link"
-                                href="about.html">¿Quiénes somos?</a></li>
+                                href="about">¿Quiénes somos?</a></li>
                         <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
                             <a href="{{ route('product.index') }}" class="nav-link dropdown-toggle arrow"
                                 data-toggle="dropdown">Tienda</a>
@@ -65,7 +65,7 @@
                             </ul>
                         </li>
                         <li class="nav-item {{ $menu == 'menu4' ? 'active' : '' }}"><a class="nav-link"
-                                href="contact-us.html">Contacto</a></li>
+                                href="contact">Contacto</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -146,13 +146,14 @@
                             <p>Puedes contactarnos y obtener más información acerca de nuestras novedades en nuestras
                                 redes sociales</p>
                             <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.facebook.com/cupcakemio" target="_blank"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/cupcakemio/" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                <!--<li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>-->
                             </ul>
                         </div>
                     </div>
