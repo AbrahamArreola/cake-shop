@@ -30,11 +30,20 @@ Route::get('shop/cart', function () {
     return view('shop.shopProducts');
 })->name('shopCart');
 
-Route::get('/index',[MainController::class, 'home ']);
+Route::get('/index',[MainController::class, 'home']);
 
 Route::get('/about',[MainController::class, 'about']);
 
 Route::get('/contact',[MainController::class, 'contact']);
+
+Route::get('/send-mail', function(){
+  $details = [
+    'title' => 'Mail from algo',
+    'body' => 'This is for testing using email using smtp'
+  ];
+  \Mail::to("jmanuel.balderrama.9@gmail.com")->send(new \App\Mail\OrderCreated($details));
+  dd("Email is Sent.");
+});
 
 /* Route::get('/product-registration', function() {
     return view('productCrud');
