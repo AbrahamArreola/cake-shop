@@ -74,7 +74,7 @@ class ProductController extends Controller
 
         Product::create($productData);
 
-        return redirect('/product');
+        return redirect('/product')->with('success', 'Producto agregado exitosamente');
     }
 
     /**
@@ -152,6 +152,6 @@ class ProductController extends Controller
             $product->delete();
         }
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Producto eliminado exitosamente');
     }
 }

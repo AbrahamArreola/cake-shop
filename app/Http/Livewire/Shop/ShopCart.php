@@ -11,6 +11,8 @@ use Livewire\Component;
 
 class ShopCart extends Component
 {
+    public $showSuccess = false;
+
     public function render()
     {
         $productsDict = Session::has('products') ? Session::get('products') : [];
@@ -63,6 +65,7 @@ class ShopCart extends Component
 
             Session::forget('products');
             $this->emit('cart:update');
+            $this->showSuccess = true;
         }
     }
 }

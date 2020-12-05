@@ -54,7 +54,7 @@ class CategoryController extends Controller
         $category->name = $request->categoryName;
         $category->save();
 
-        return redirect('/product');
+        return redirect('/product')->with('success', 'Categoría creada exitosamente');
     }
 
     /**
@@ -94,7 +94,7 @@ class CategoryController extends Controller
 
         Category::where('id', $category->id)->update(['name' => $request->categoryColumnName]);
 
-        return redirect('/product');
+        return redirect('/product')->with('success', 'Categoría modificada exitosamente');
     }
 
     /**
@@ -110,6 +110,6 @@ class CategoryController extends Controller
         }
         $category->delete();
 
-        return redirect('/product');
+        return redirect('/product')->with('success', 'Categoría eliminada exitosamente');
     }
 }
