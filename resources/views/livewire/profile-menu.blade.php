@@ -84,10 +84,6 @@
                     {{ __('Gestionar administradores') }}
                 </x-jet-dropdown-link>
 
-                <x-jet-dropdown-link href="#">
-                    {{ __('Gestionar pedidos') }}
-                </x-jet-dropdown-link>
-
                 <div class="border-t border-gray-100"></div>
             @endcan
 

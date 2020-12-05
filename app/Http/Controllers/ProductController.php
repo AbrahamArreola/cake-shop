@@ -74,7 +74,7 @@ class ProductController extends Controller
 
         Product::create($productData);
 
-        return redirect('/product');
+        return redirect('/product')->with('success', 'Producto agregado exitosamente');
     }
 
     /**
@@ -117,7 +117,7 @@ class ProductController extends Controller
                 'image' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:3072']
             ]);
 
-            Storage::delete('public/' . $product->image);
+            Storage::delete('public/products/' . $product->image);
 
             $newProductData = $request->only(['image']);
             $filename = time() . '-' . $request->image->getClientOriginalName();
@@ -152,6 +152,6 @@ class ProductController extends Controller
             $product->delete();
         }
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Producto eliminado exitosamente');
     }
 }

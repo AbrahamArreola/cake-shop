@@ -4,12 +4,15 @@ namespace App\Http\Livewire\Shop;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class ShopCart extends Component
 {
+    public $showSuccess = false;
+
     public function render()
     {
         $productsDict = Session::has('products') ? Session::get('products') : [];
@@ -41,10 +44,9 @@ class ShopCart extends Component
     }
 
     public function makeOrder(){
-        $productsDict = Session::has('products') ? Session::get('products') : [];
+        $products = Session::has('products') ? Session::get('products') : [];
 
-        if(count($productsDict) > 0){
-            $products = Session::get('products');
+        if(count($products) > 0){
             $total = 0;
 
             //get total amount
@@ -53,16 +55,17 @@ class ShopCart extends Component
                 $total += $value * $product->price;
             }
 
-            $order = Order::create(['state' => 0, 'amount' => $total]);
+            $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
 
             //create relations
             foreach ($products as $key => $value) {
                 $product = Product::find($key);
                 $order->products()->attach($product->id, ['quantity' => $value]);
             }
-        }
 
-        Session::forget('products');
-        $this->emit('cart:update');
+            Session::forget('products');
+            $this->emit('cart:update');
+            $this->showSuccess = true;
+        }
     }
 }

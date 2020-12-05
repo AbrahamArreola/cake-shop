@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
             $table->tinyInteger('state');
             $table->float('amount');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
