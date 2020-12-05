@@ -117,7 +117,7 @@ class ProductController extends Controller
                 'image' => ['required', 'mimes:jpeg,jpg,png,svg', 'max:3072']
             ]);
 
-            Storage::delete('public/' . $product->image);
+            Storage::delete('public/products/' . $product->image);
 
             $newProductData = $request->only(['image']);
             $filename = time() . '-' . $request->image->getClientOriginalName();

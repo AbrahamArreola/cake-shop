@@ -30,11 +30,16 @@ Route::get('shop/cart', function () {
     return view('shop.shopProducts');
 })->name('shopCart');
 
-Route::get('/index',[MainController::class, 'home ']);
+Route::get('shop/orders', function () {
+    return view('shop.productsOrders');
+})->name('orders');
 
-Route::get('/about',[MainController::class, 'about']);
+//Static pages
+Route::get('/index',[MainController::class, 'home'])->name('index');
 
-Route::get('/contact',[MainController::class, 'contact']);
+Route::get('/about',[MainController::class, 'about'])->name('about');
+
+Route::get('/contact',[MainController::class, 'contact'])->name('contact');
 
 /* Route::get('/product-registration', function() {
     return view('productCrud');

@@ -53,19 +53,22 @@
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav ml-auto mr-28 lg:mr-44" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item {{ $menu == 'menu1' ? 'active' : '' }}"><a class="nav-link"
-                                href="index">Inicio</a></li>
+                                href="{{ route('index') }}">Inicio</a></li>
                         <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link"
-                                href="about">¿Quiénes somos?</a></li>
+                                href="{{ route('about') }}">¿Quiénes somos?</a></li>
                         <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
                             <a href="{{ route('product.index') }}" class="nav-link dropdown-toggle arrow"
                                 data-toggle="dropdown">Tienda</a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('product.index') }}">Productos</a></li>
-                                <li><a href="shop-detail.html">Carrito de compras</a></li>
+                                @can('client-settings')
+                                    <li><a href="{{ route('shopCart') }}">Carrito de compras</a></li>
+                                @endcan
+                                <li><a href="{{ route('orders') }}">Pedidos</a></li>
                             </ul>
                         </li>
                         <li class="nav-item {{ $menu == 'menu4' ? 'active' : '' }}"><a class="nav-link"
-                                href="contact">Contacto</a></li>
+                                href="{{ route('contact') }}">Contacto</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -76,9 +79,8 @@
                         <ul>
                             @can('admin-settings')
                                 <li class="side-menu">
-                                    <a href="#">
+                                    <a href="{{ route('orders') }}">
                                         <i class="fas fa-bell"></i>
-                                        <span class="badge">3</span>
                                         <p>Pedidos</p>
                                     </a>
                                 </li>
