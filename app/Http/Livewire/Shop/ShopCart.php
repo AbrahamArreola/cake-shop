@@ -53,16 +53,13 @@ class ShopCart extends Component
                 $total += $value * $product->price;
             }
 
-            $order = Order::create(['state' => 'pendiente', 'amount' => $total]);
+            $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
 
             //create relations
             foreach ($products as $key => $value) {
                 $product = Product::find($key);
                 $order->products()->attach($product->id, ['quantity' => $value]);
             }
-
-            $user = User::find(Auth::user()->id);
-            $user->orders()->attach($order->id);
 
             Session::forget('products');
             $this->emit('cart:update');

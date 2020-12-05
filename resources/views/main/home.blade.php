@@ -1,6 +1,6 @@
 @extends('layouts.mainContent', ['menu' => 'menu1'])
 
-@section('title', 'Registrar productos')
+@section('title', 'Inicio')
 
 @section('styleFiles')
   <link rel="stylesheet" href="{{ asset('css/productShow.css') }}">
@@ -137,7 +137,7 @@
   </div>
 
     <!-- Start Products  -->
-    
+
     <!-- End Products  -->
 
 

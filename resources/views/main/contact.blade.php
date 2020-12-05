@@ -1,6 +1,6 @@
-@extends('layouts.mainContent', ['menu' => 'menu1'])
+@extends('layouts.mainContent', ['menu' => 'menu4'])
 
-@section('title', 'Registrar productos')
+@section('title', 'Contacto')
 
 @section('styleFiles')
   <link rel="stylesheet" href="{{ asset('css/productShow.css') }}">
