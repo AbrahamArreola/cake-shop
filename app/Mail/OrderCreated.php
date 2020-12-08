@@ -11,16 +11,21 @@ class OrderCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $details;
+    public $order;
+    public $products;
+    public $user;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct($order)
     {
-        $this->details = $details;
+        $this->order = $order;
+        $this->products = $order->products()->get();
+        $this->user = $order->user();
     }
 
     /**
@@ -30,7 +35,8 @@ class OrderCreated extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mailtrap Confirmation')
-          ->view('mailers.order');
+        return $this->from('CupcakeMio@cupcakemio.com')
+                    ->subject('Cupcake Mio - Order #' . $this->order->id)
+                    ->view('mailers.order');
     }
 }

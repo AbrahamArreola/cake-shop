@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Mail\OrderCreated;
+use Illuminate\Support\Facades\Mail;
 
 class Order extends Model
 {
@@ -31,5 +33,9 @@ class Order extends Model
     public function setStateAttribute($state)
     {
         $this->attributes['state'] = $state == 'tomado' ? 1 : 0;
+    }
+
+    public function sendMail(){
+      Mail::to($this->user()->email)->send(new OrderCreated($this));
     }
 }

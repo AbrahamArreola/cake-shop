@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
+use App\Mail\OrderCreated;
+use Illuminate\Support\Facades\Mail;
 
 class ShopCart extends Component
 {
@@ -63,9 +65,16 @@ class ShopCart extends Component
                 $order->products()->attach($product->id, ['quantity' => $value]);
             }
 
+            //mail
+            $this->sendMail($order);
+
             Session::forget('products');
             $this->emit('cart:update');
             $this->showSuccess = true;
         }
+    }
+
+    public function sendMail($order){
+      Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
 }
