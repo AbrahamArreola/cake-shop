@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use App\Mail\OrderCreated;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\PaymentController;
+use App\PayPal;
 
 class ShopCart extends Component
 {
@@ -58,7 +60,7 @@ class ShopCart extends Component
             }
 
             $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
-
+            Session::put('order',$order);
             //create relations
             foreach ($products as $key => $value) {
                 $product = Product::find($key);
@@ -66,7 +68,11 @@ class ShopCart extends Component
             }
 
             //mail
-            $this->sendMail($order);
+            //$this->sendMail($order);
+
+            //Paypal PaymentE
+            $this->PaypalPayment($order);
+            //$this->sendMail($order);
 
             Session::forget('products');
             $this->emit('cart:update');
@@ -75,6 +81,12 @@ class ShopCart extends Component
     }
 
     public function sendMail($order){
-      Mail::to(Auth::user()->email)->send(new OrderCreated($order));
+      //Mail::to(Auth::user()->email)->send(new OrderCreated($order));
+    }
+
+    public function PaypalPayment($order){
+      $paypal = new PaymentController();
+      //return redirect('/paypal/pay');
+      $paypal->payWithPayPal($order);
     }
 }

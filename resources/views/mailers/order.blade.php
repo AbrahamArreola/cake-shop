@@ -20,6 +20,7 @@
         @foreach($order->products as $product)
         <tr>
           <td>{{$product->pivot->quantity . ' x ' . $product->name}}</td>
+          <br>
           <td>{{$product->price}}</td>
         </tr>
         @endforeach

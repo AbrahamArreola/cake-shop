@@ -91,6 +91,10 @@
             <div class="col-8 d-flex shopping-box py-2"><button class="ml-auto btn hvr-hover text-white font-semibold"
                     wire:click="makeOrder">Realizar pedido</button> </div>
         </div>
+
+        
+
+
     </div>
 
     <div class="{{ $showSuccess ? '' : 'hidden' }} fixed left-0 bottom-0 z-50 w-full md:w-1/3 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 pl-4 pr-1 pb-4 shadow-md"
