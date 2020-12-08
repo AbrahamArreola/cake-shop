@@ -37,7 +37,8 @@
                         @if ($order->state == 0)
                             <button
                                 class="bg-cm-main-pink px-2 py-1 mt-3 text-white rounded focus:outline-none hover:bg-black"
-                                x-on:click="showSuccess = true" wire:click="takeOrder({{ $order->id }})"><b>Tomar
+                                x-on:click="showSuccess = true;setTimeout(() => { showSuccess = false; }, 1500);"
+                                wire:click="takeOrder({{ $order->id }})"><b>Tomar
                                     pedido</b></button>
                         @endif
                     @endcan

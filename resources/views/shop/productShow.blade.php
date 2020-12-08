@@ -42,7 +42,7 @@
                     <div class="products-single fix">
                         <div class="box-img-hover">
                             <img src="{{ asset('storage/products/' . $product->image) }}" class="img-fluid" alt="Image">
-                            @if (Auth::user() && Auth::user()->role->name == 'admin')
+                            @can('admin-settings')
                                 <div class="mask-icon">
                                     <ul>
                                         <form action="{{ route('product.update', [$product]) }}" method="POST"
@@ -59,7 +59,7 @@
                                         </form>
                                     </ul>
                                 </div>
-                            @endif
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -68,17 +68,13 @@
                         <h4>{{ $product->name }}</h4>
                         <h5>${{ $product->price }}</h5>
                         <p>{{ $product->description }}</p>
-                        @if (Auth::user())
-                            @if (Auth::user()->role->name == 'admin')
-                                <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Editar
-                                    producto</button>
-                                <button class="btn hvr-hover delete" data-toggle="modal"
-                                    data-target="#confirmModal">Eliminar
-                                    producto</button>
-                            @else
-                                <button class="btn hvr-hover">Agregar al carrito</button>
-                            @endif
-                        @endif
+                        @can('admin-settings')
+                            <button class="btn hvr-hover" data-toggle="modal" data-target="#productModal">Editar
+                                producto</button>
+                            <button class="btn hvr-hover delete" data-toggle="modal"
+                                data-target="#confirmModal">Eliminar
+                                producto</button>
+                        @endcan
                     </div>
                 </div>
             </div>

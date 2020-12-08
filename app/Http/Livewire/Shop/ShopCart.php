@@ -11,15 +11,13 @@ use Livewire\Component;
 
 class ShopCart extends Component
 {
-    public $showSuccess = false;
-
     public function render()
     {
         $productsDict = Session::has('products') ? Session::get('products') : [];
 
         $products = [];
 
-        foreach($productsDict as $key => $value){
+        foreach ($productsDict as $key => $value) {
             array_push($products, Product::find($key));
         }
 
@@ -43,29 +41,42 @@ class ShopCart extends Component
         $this->emit('cart:update');
     }
 
-    public function makeOrder(){
+    public function makeOrder()
+    {
         $products = Session::has('products') ? Session::get('products') : [];
 
-        if(count($products) > 0){
+        if (count($products) > 0) {
             $total = 0;
+            $deletedProduct = false;
 
             //get total amount
             foreach ($products as $key => $value) {
                 $product = Product::find($key);
-                $total += $value * $product->price;
+                if (isset($product)){
+                    $total += $value * $product->price;
+                }
+                else{
+                    $deletedProduct = true;
+                    break;
+                }
             }
 
-            $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
+            if($deletedProduct){
+                session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
+            }
+            else{
+                $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
 
-            //create relations
-            foreach ($products as $key => $value) {
-                $product = Product::find($key);
-                $order->products()->attach($product->id, ['quantity' => $value]);
+                //create relations
+                foreach ($products as $key => $value) {
+                    $product = Product::find($key);
+                    if (isset($product)) $order->products()->attach($product->id, ['quantity' => $value]);
+                }
+                session()->flash('success', 'Pedido realizado exitosamente!');
             }
 
             Session::forget('products');
             $this->emit('cart:update');
-            $this->showSuccess = true;
         }
     }
 }
