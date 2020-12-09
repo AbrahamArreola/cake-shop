@@ -95,6 +95,10 @@
             <div class="col-8 d-flex shopping-box py-2"><button class="ml-auto btn hvr-hover text-white font-semibold"
                     wire:click="makeOrder">Realizar pedido</button> </div>
         </div>
+
+        
+
+
     </div>
 
     @if (session()->has('success') || session()->has('fail'))
