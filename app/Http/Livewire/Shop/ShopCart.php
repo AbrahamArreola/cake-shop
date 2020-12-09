@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Shop;
 
+use App\Http\Controllers\PaymentController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -100,4 +101,41 @@ class ShopCart extends Component
     public function sendMail($order){
       Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
+
+    public function payWithPayPal(){
+      $products = Session::has('products') ? Session::get('products') : [];
+
+      if (count($products) > 0) {
+          $total = 0;
+          $deletedProduct = false;
+
+          //get total amount
+          foreach ($products as $key => $value) {
+              $product = Product::find($key);
+              if (isset($product)){
+                  $total += $value * $product->price;
+              }
+              else{
+                  $deletedProduct = true;
+                  break;
+              }
+          }
+
+          if($deletedProduct){
+              session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
+          }
+          else{
+
+            if($total > 0){
+              Session::put('productsPaypal',$products);
+              Session::put('totalAmount', $total);
+
+              $paypal = new PaymentController();
+              $paypal->payWithPayPal($total);
+              $this->emit('cart:update');
+              }
+
+            }
+          }
+        }
 }

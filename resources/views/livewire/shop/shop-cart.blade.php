@@ -40,7 +40,7 @@
                                         </td>
                                         <td class="quantity-box"><input type="number" size="4"
                                                 value="{{ $productAmount }}" min="1" max="20" step="1"
-                                                wire:click='updateProductAmount({{ $product->id }},$event.target.value)'  
+                                                wire:click='updateProductAmount({{ $product->id }},$event.target.value)'
                                                 wire:click="$set($productAmount,$event.target.value)"
                                                 class="c-input-text qty text"></td>
                                         <td class="total-pr">
@@ -97,6 +97,8 @@
             </div>
             <div class="col-8 d-flex shopping-box py-2"><button class="ml-auto btn hvr-hover text-white font-semibold"
                     wire:click="makeOrder">Realizar pedido</button> </div>
+            <div class="col-8 d-flex shopping-box py-2"><button class="ml-auto btn hvr-hover text-white font-semibold"
+                    wire:click="payWithPayPal">Pay with PayPal</button> </div>
         </div>
     </div>
 

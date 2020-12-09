@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,10 @@ Route::get('/contact',[MainController::class, 'contact'])->name('contact');
 /* Route::get('/product-registration', function() {
     return view('productCrud');
 }); */
+
+// PayPal Payment
+Route::get('/paypal/status', [PaymentController::class, 'payPalStatus'])->name('payPalStatus');
+
 
 // Google Verification
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
