@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
     <!-- Bootstrap CSS -->
@@ -17,7 +18,16 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     @livewireStyles
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
 
     @yield('styleFiles')
 </head>
@@ -41,87 +51,80 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <ul class="nav navbar-nav ml-auto mr-28 lg:mr-44" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item {{ $menu == 'menu1' ? 'active' : '' }}"><a class="nav-link"
-                                href="index.html">Inicio</a></li>
+                                href="{{ route('index') }}">Inicio</a></li>
                         <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link"
-                                href="about.html">¿Quiénes somos?</a></li>
+                                href="{{ route('about') }}">¿Quiénes somos?</a></li>
                         <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Tienda</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="shop.html">Sidebar Shop</a></li>
-                                <li><a href="shop-detail.html">Shop Detail</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                            </ul>
+                            <a href="{{ route('product.index') }}" class="nav-link dropdown-toggle arrow"
+                                data-toggle="dropdown">Tienda</a>
+                            @auth
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ route('product.index') }}">Productos</a></li>
+                                    @can('client-settings')
+                                        <li><a href="{{ route('shopCart') }}">Carrito de compras</a></li>
+                                    @endcan
+                                    <li><a href="{{ route('orders') }}">Pedidos</a></li>
+                                </ul>
+                            @endauth
                         </li>
                         <li class="nav-item {{ $menu == 'menu4' ? 'active' : '' }}"><a class="nav-link"
-                                href="contact-us.html">Contacto</a></li>
+                                href="{{ route('contact') }}">Contacto</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                        <li class="side-menu">
-                            <a href="#">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="badge">3</span>
-                                <p>Carrito</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @auth
+                    <div class="absolute right-6 attr-nav">
+                        <ul>
+                            @can('admin-settings')
+                                <li class="side-menu">
+                                    <a href="{{ route('orders') }}">
+                                        <i class="fas fa-bell"></i>
+                                        <p>Pedidos</p>
+                                    </a>
+                                </li>
+
+                            @elsecannot('admin-settings')
+                                @livewire('cart-icon')
+                            @endcan
+
+                            @livewire('profile-menu')
+                        </ul>
+                    </div>
+                @endauth
                 <!-- End Atribute Navigation -->
-            </div>
-            <!-- Start Side Menu -->
-            <div class="side">
-                <a href="#" class="close-side"><i class="fa fa-times"></i></a>
-                <li class="cart-box">
-                    <ul class="cart-list">
-                        <li>
-                            <a href="#" class="photo"><img src="images/img-pro-01.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
+
+                @if (!Auth::user())
+                    <ul
+                        class="absolute top-5 lg:top-14 right-3 bottom-3 lg:flex w-1/5 md:w-auto md:text-base font-bold text-center">
+                        <li class="pr-3 md:pb-2.5"><a
+                                class="p-2 text-cm-main-pink md:text-white md:bg-cm-main-pink rounded-md hover:bg-cm-pink2"
+                                href="{{ route('login') }}">Entrar</a>
                         </li>
-                        <li>
-                            <a href="#" class="photo"><img src="images/img-pro-02.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="images/img-pro-03.jpg" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
-                        <li class="total">
-                            <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
+                        <li><a class="p-2 text-cm-cherry md:text-white md:bg-cm-cherry rounded-md hover:bg-red-400"
+                                href="{{ route('register') }}">Registrarse</a>
                         </li>
                     </ul>
-                </li>
+                @endif
             </div>
+
+            <!-- Start Side Menu -->
+            @auth
+                <div class="side">
+                    <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+                    <li class="cart-box">
+                        @livewire('side-shop-cart')
+                    </li>
+                </div>
+            @endauth
             <!-- End Side Menu -->
         </nav>
         <!-- End Navigation -->
     </header>
     <!-- End Main Top -->
-
-    <!-- Start Top Search -->
-    <div class="top-search">
-        <div class="container">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Buscar">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-    <!-- End Top Search -->
 
     @yield('content')
 
@@ -147,13 +150,14 @@
                             <p>Puedes contactarnos y obtener más información acerca de nuestras novedades en nuestras
                                 redes sociales</p>
                             <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.facebook.com/cupcakemio" target="_blank"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/cupcakemio/" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                <!--<li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>-->
+                                <!--<li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>-->
                             </ul>
                         </div>
                     </div>
@@ -181,6 +185,8 @@
         </div>
     </footer>
     <!-- End Footer  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
     <!-- ALL JS FILES -->
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
