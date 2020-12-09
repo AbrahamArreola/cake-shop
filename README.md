@@ -1,73 +1,29 @@
-<center> <h1>Cupcake mío</h1> </center>
+### Cupcake mío (eCommerce website)
 
-Cupcake mío es una marca no registrada la cual ofrece sus servicios de repostería a través de las redes sociales.
-En estas se ofrecen diversos productos como pasteles de diferentes sabores además de servicios de personalización a pedido del cliente
-para eventos como fiestas, bodas, etc.
+Este proyecto tiene por objetivo el crear un eCommerce website para la gestión y la compra de productos pertenecientes a la marca Cupcake mío. El sitio cuenta con diversos módulos para que cualquier persona que visite la página le sea posible visualizar el catálogo de productos así como tener contacto con el negocio por medio de correo electrónico y redes sociales, en caso de cualquier duda o aclaración en la compra de algún producto. También se cuenta con un control de sesiones que administra la estancia en la página para dos tipos de usuario:
 
-### Redes sociales
-- [Facebook](https://www.facebook.com/cupcakemio)
-- [Instagram](https://www.instagram.com/cupcakemio/)
+- **administrador**: empleados del negocio con una cuenta con la cual se encargan de mantener actualizada la página a través de diversos módulos que les permiten crear, editar y eliminar productos, así como gestionar los pedidos de múltiples clientes.
+- **cliente**: cualquier usuario con una cuenta con la cual disponen de un carrito de compras para hacer pedidos de los productos deseados a través de la página con la posibilidad de realizar pagos por medio de PayPal.
 
-## Acerca de este proyecto
-Como parte del proyecto para la materia de Programación para internet, mi objetivo es realizar una página completamente funcional a través de una tienda en línea para la gestión de los servicios ofrecidos por esta marca, la cual facilite la visualización de los productos, además de ofrecer un entorno amigable para el contacto entre cliente y proveedor para la realización de pedidos.
+Estos usuarios pueden administrar sus cuentas de manera que siempre puedan mantener actualizada su información personal como nombre, foto de perfil o contraseñas.
 
-## Primera entrega (segundo proyecto)
-Para esta primer entrega se elaboró un CRUD con dos entidades de la base de datos las cuales son la de productos y categorías, y con las cuales fue posible la elaboración del módulo de alta de productos con el que un administrador es capaz de registrar productos en la pagina para su visualización en la tienda en línea.
-Estas dos entidades cuentan con la siguiente estructura:
+<hr>
 
-### Tabla categories
-| Campo      |    Tipo    |  Tamaño | Descripción |
-|:-----------|:----------:|:-------:|:------------|
-| id         | BIGINT     | 20      | Identificador del producto |
-| created_at | TIMESTAMP  |         | Fecha de creación |
-| updated_at | TIMESTAMP  |         | Fecha de actualización |
-| name       | VARCHAR    | 50      | Nombre de la categoría |
+## Integrantes del equipo
 
-### Tabla products
-| Campo      |    Tipo    |  Tamaño | Descripción |
-|:-----------|:----------:|:-------:|:------------|
-| id         | BIGINT     | 20      | Identificador del producto |
-| created_at | TIMESTAMP  |         | Fecha de creación |
-| updated_at | TIMESTAMP  |         | Fecha de actualización |
-| name       | VARCHAR    | 50      | Nombre del producto |
-| price      | DOUBLE     | 8,2     | Precio del producto |
-| description| TEXT       | 65535   | Breve descripción del producto |
-| image      | VARCHAR    | 255     | Imagen del producto |
-| category_id| BIGINT     | 29      | Llave foránea para relacionar el producto con una categoría de la tabla categories |
+- Jorge Abraham Arreola
+- Juan Manuel Balderrama
 
-## Pasos para el uso del proyecto
-Para este proyecto se utiliza el framework Laravel, por lo que su instalación forma parte primordial antes de dar seguimiento a los pasos descritos a continuación:
+<hr>
 
-1. Instalar las dependencias del proyecto con el siguiente comando.
+## Instrucciones de instalación
 
-    ```php
-    composer install
-    ```
-
-2. Configurar el archivo .env.example incluido en el repositorio con sus respectivas credenciales de bases de datos, para después crear el archivo .env.
-
-    ```php
-    cp .env.example .env
-    ```
-
-3. Generar la llave que provee seguridad al proyecto.
-
-    ```php
-    php artisan key:generate
-    ```
-
-4. Finalmente ejecutar las migraciones para la configuración de la base de datos.
-
-    ```php
-    php artisan migrate 
-    ```
-
-## Requisito extra
-Para este proyecto se hace uso de almacenamiento de imágenes con ayuda del flySystem de Laravel de forma local, por lo que es necesario crear un enlace simbólico para el correcto funcionamiento de las imágenes con el siguiente comando.
-
-```php
+Es necesaria una instalación limpia de un proyecto de laravel, además de la creación de un link simbólico para trabajar con imagenes:
+```shell
 php artisan storage:link
 ```
 
-## Arranque del proyecto
-Actualmente el proyecto se encuentra en fase de desarrollo por lo que para poder visualizar el avance hasta ahora es necesario acceder a la ruta **/product** del localhost.
+Finalmente, también es importante realizar las migraciones con los seeders ya que estos últimos se encargan de crear los roles necesarios para el funcionamiento del sitio web:
+```shell
+php artisan migrate --seed
+```

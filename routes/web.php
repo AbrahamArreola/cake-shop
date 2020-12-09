@@ -3,6 +3,8 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,9 +43,22 @@ Route::get('/about',[MainController::class, 'about'])->name('about');
 
 Route::get('/contact',[MainController::class, 'contact'])->name('contact');
 
-/* Route::get('/product-registration', function() {
-    return view('productCrud');
-}); */
+
+//API
+Route::get('product/info/{id}', function ($id) {
+    try{
+        $product = Product::findOrfail($id);
+        return response()->json([
+            'ok' => true,
+            'product' => collect($product)->except(['created_at', 'updated_at', 'image', 'deleted_at', 'category_id'])
+        ]);
+    } catch(ModelNotFoundException  $err){
+        return response()->json([
+            'ok' => false,
+            'error' => 'El producto con id: ' . $id . ' no existe'
+        ], 400);
+    }
+});
 
 Route::resource('product', ProductController::class);
 Route::resource('category', CategoryController::class);
