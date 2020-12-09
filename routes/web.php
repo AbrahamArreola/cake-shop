@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\GoogleController;
 use App\Providers\PayPal;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,11 @@ Route::get('/send-mail', function(){
 
 //PayPal Payment
 Route::get('/paypal/status', [PaymentController::class, 'payPalStatus'])->name('payPalStatus');
+
+// GOOGLE
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 
 /* Route::get('/product-registration', function() {
     return view('productCrud');

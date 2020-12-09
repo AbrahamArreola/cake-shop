@@ -467,7 +467,7 @@
                                                             	<tr>
                                                                 	<td valign="middle" class="templateButtonContent">
                                                                     	<div mc:edit="std_content02">
-                                                                        	<a href="http://cake-shop.test/index" target="_blank">Cupcake Mio</a>
+                                                                        	<a href="http://cake-shop.com/index" target="_blank">Cupcake Mio</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
