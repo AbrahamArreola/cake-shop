@@ -31,8 +31,8 @@ return [
     ],
 
     'google' => [
-        'client_id' => '168987732985-94bbg1fok84m8iubgh2g5mk80ljtmt4r.apps.googleusercontent.com',
-        'client_secret' => 'YQp1Ux0CIm_-yqSIFywfngQL',
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://cake-shop.com/auth/google/callback',
       ],
 

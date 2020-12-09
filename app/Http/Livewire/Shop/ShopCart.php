@@ -52,47 +52,41 @@ class ShopCart extends Component
         if (count($products) > 0) {
             $total = 0;
             $deletedProduct = false;
-
             //get total amount
             foreach ($products as $key => $value) {
                 $product = Product::find($key);
-                if (isset($product)){
+                if (isset($product)) {
                     $total += $value * $product->price;
-                }
-                else{
+                } else {
                     $deletedProduct = true;
                     break;
                 }
             }
 
-            if($deletedProduct){
+            if ($deletedProduct) {
                 session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
-            }
-            else{
-                $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
-                Session::put('order',$order);
+            } else {
+                Session::put('amount', $total);
+                Session::put('products', $products);
 
-                //create relations
-                foreach ($products as $key => $value) {
-                    $product = Product::find($key);
-                    if (isset($product)) $order->products()->attach($product->id, ['quantity' => $value]);
-                }
+                //Paypal PaymentE
+                $this->PaypalPayment($total);
+                //$this->sendMail($order);
 
-                $this->PaypalPayment($order);
-
-                Session::forget('products');
                 $this->emit('cart:update');
             }
         }
     }
 
-    public function sendMail($order){
-      //Mail::to(Auth::user()->email)->send(new OrderCreated($order));
+    public function sendMail($order)
+    {
+        //Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
 
-    public function PaypalPayment($order){
-      $paypal = new PaymentController();
-      //return redirect('/paypal/pay');
-      $paypal->payWithPayPal($order);
+    public function PaypalPayment($amount)
+    {
+        $paypal = new PaymentController();
+        //return redirect('/paypal/pay');
+        $paypal->payWithPayPal($amount);
     }
 }

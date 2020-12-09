@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Product;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -22,7 +25,6 @@ use Illuminate\Support\Facades\Mail;
 class PaymentController extends Controller
 {
     private $apiContext;
-    private $order;
 
     public function __construct()
     {
@@ -41,15 +43,15 @@ class PaymentController extends Controller
 
     // ...
 
-    public function payWithPayPal($order)
+    public function payWithPayPal($orderAmount)
     {
-        $this->order = $order;
+        //$this->order = $order;
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
 
         $amount = new Amount();
-        $amount->setTotal($this->order->amount);
+        $amount->setTotal($orderAmount);
         $amount->setCurrency('MXN');
 
         $transaction = new Transaction();
@@ -91,6 +93,7 @@ class PaymentController extends Controller
           //dd($status);
           Session::put('status',$status);
           Session::put('status-id','2');
+
           return view('/paypal/status')->with(compact('status'));
       }
 
@@ -99,22 +102,45 @@ class PaymentController extends Controller
       $execution = new PaymentExecution();
       $execution->setPayerId($payerId);
 
-      /** Execute the payment **/
+      /* Execute the payment */
       $result = $payment->execute($execution, $this->apiContext);
+      //dd(Session::get('order')->id);
 
       if ($result->getState() === 'approved') {
-          Mail::to(Auth::user()->email)->send(new OrderCreated(Session::get('order')));
           $status = '¡Gracias! El pago a través de PayPal se ha ralizado correctamente.';
-          //dd($status);
           Session::put('status',$status);
           Session::put('status-id','1');
-          return view('/paypal/status')->with('status','hola hola');
+
+          //Crear Orden si fue exitosa la compra
+          if(Session::has('products')){
+              $this->makeOrder();
+              Session::forget('products');
+          }
+
+
+
+          return view('/paypal/status')->with('status');
       }
 
       $status = '¡Lo sentimos! El pago a través de PayPal no se pudo realizar.';
       //dd($status);
       Session::put('status',$status);
       Session::put('status-id','2');
+
       return view('/paypal/status')->with(compact('status'));
+    }
+
+    public function makeOrder(){
+      $order = Order::create(['state' => 'pendiente', 'amount' => Session::get('amount'), 'user_id' => Auth::user()->id]);
+      //Session::put('order');
+      $products = Session::get('products');
+
+      //create relations
+      foreach ($products as $key => $value) {
+          $product = Product::find($key);
+          $order->products()->attach($product->id, ['quantity' => $value]);
+      }
+
+      Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
 }

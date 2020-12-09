@@ -25,8 +25,6 @@ Route::get('/', function () {
     return redirect()->route('index');
 });
 
-Route::get('/index',[MainController::class, 'home']);
-
 /* Admin routes */
 Route::get('admin/panel', function () {
     return view('adminSection');
