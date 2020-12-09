@@ -3,8 +3,7 @@
 @section('title', 'Inicio')
 
 @section('styleFiles')
-  <link rel="stylesheet" href="{{ asset('css/productShow.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/productCrud.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/paypal-status.css') }}">
 @endsection
 
 @section('scriptFiles')
@@ -13,46 +12,31 @@
 
 @section('content')
 
-    <!-- -->
-    <div class="text-slid-box">
-        <div id="offer-box" class="carouselTicker">
-            <ul class="offer-box">
-                <li>
-                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT80
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> Off 10%! Shop Vegetables
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> 50% - 80% off on Vegetables
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> 20% off Entire Purchase Promo code: offT30
-                </li>
-                <li>
-                    <i class="fab fa-opencart"></i> Off 50%! Shop Now
-                </li>
-            </ul>
+    @if (Session::has('status'))
+      <br />
+      <br />
+      @if (Session::get('status-id') == "1")
+        <div class="text-center">
+          <h2 class="noo-sh-title-top">Estado del pago: </h2>
+          <h5 class="status-approved"> {{ Session::get('status') }} </h5>
+          <br />
+          <p><a class="btn hvr-hover" href="/index">Inicio</a></p>
         </div>
-    </div>
-    <!-- -->
+      @else
+      <div class="text-center">
+        <h2 class="noo-sh-title-top">Estado del pago: </h2>
+        <h5 class="status-denied"> {{ Session::get('status') }} </h5>
+        <br />
+        <p><a class="btn hvr-hover" href="/index">Inicio</a></p>
+      </div>
+      @endif
 
-    @if (session('status'))
-      <h3>{{$status}}</h3>
-      <p>holi1</p>
+      <br />
+      <br />
+
+      {{Session::forget('status')}}
 
     @endif
-
-    <p>holi</p>
     <!-- Start copyright  -->
     <div class="footer-copyright">
         <p class="footer-company">All Rights Reserved. &copy; 2018 <a href="#">ThewayShop</a> Design By :

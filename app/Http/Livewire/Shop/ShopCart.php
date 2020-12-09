@@ -77,6 +77,7 @@ class ShopCart extends Component
             Session::forget('products');
             $this->emit('cart:update');
             $this->showSuccess = true;
+            //dd('hola');
         }
     }
 

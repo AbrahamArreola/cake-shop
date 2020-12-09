@@ -87,8 +87,10 @@ class PaymentController extends Controller
       $payerId = $request->input('PayerID');
       $token = $request->input('token');
       if (!$paymentId || !$payerId || !$token) {
-          $status = 'Lo sentimos! El pago a través de PayPal no se pudo realizar1.';
-          dd($status);
+          $status = '¡Lo sentimos! El pago a través de PayPal no se pudo realizar1.';
+          //dd($status);
+          Session::put('status',$status);
+          Session::put('status-id','2');
           return view('/paypal/status')->with(compact('status'));
       }
 
@@ -102,14 +104,17 @@ class PaymentController extends Controller
 
       if ($result->getState() === 'approved') {
           Mail::to(Auth::user()->email)->send(new OrderCreated(Session::get('order')));
-          $status = 'Gracias! El pago a través de PayPal se ha ralizado correctamente.';
+          $status = '¡Gracias! El pago a través de PayPal se ha ralizado correctamente.';
           //dd($status);
-
-          return view('/paypal/status')->with(compact('status'));
+          Session::put('status',$status);
+          Session::put('status-id','1');
+          return view('/paypal/status')->with('status','hola hola');
       }
 
-      $status = 'Lo sentimos! El pago a través de PayPal no se pudo realizar2.';
-      dd($status);
+      $status = '¡Lo sentimos! El pago a través de PayPal no se pudo realizar2.';
+      //dd($status);
+      Session::put('status',$status);
+      Session::put('status-id','2');
       return view('/paypal/status')->with(compact('status'));
     }
 }
