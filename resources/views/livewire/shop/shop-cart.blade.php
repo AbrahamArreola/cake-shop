@@ -12,6 +12,7 @@
                                 <th>Precio</th>
                                 <th>Cantidad</th>
                                 <th>Total</th>
+                                <th>Extra</th>
                                 <th class="text-center">Remover</th>
                             </tr>
                         </thead>
@@ -38,8 +39,9 @@
                                             <p>${{ $product->price }}</p>
                                         </td>
                                         <td class="quantity-box"><input type="number" size="4"
-                                                value="{{ $productAmount }}" min="1" step="1"
-                                                wire:input='updateProductAmount({{ $product->id }},$event.target.value)'
+                                                value="{{ $productAmount }}" min="1" max="20" step="1"
+                                                wire:click='updateProductAmount({{ $product->id }},$event.target.value)'  
+                                                wire:click="$set($productAmount,$event.target.value)"
                                                 class="c-input-text qty text"></td>
                                         <td class="total-pr">
                                             <p class="w-16 m-0">${{ $productAmount * $product->price }}</p>
@@ -50,6 +52,7 @@
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </td>
+
                                     </tr>
                                 @endif
                             @endforeach

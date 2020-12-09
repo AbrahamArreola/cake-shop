@@ -7,7 +7,9 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use App\Mail\OrderCreated;
 
 class ShopCart extends Component
 {
@@ -35,8 +37,17 @@ class ShopCart extends Component
 
     public function updateProductAmount($productId, $amount)
     {
+      if($amount > 20){
+        $newAmount = 20;
+      }
+      elseif ($amount > 0){
+        $newAmount = (int)$amount;
+      }
+      else{
+        $newAmount = 1;
+      }
         $products = Session::get('products');
-        $products[$productId] = (int)$amount;
+        $products[$productId] = $newAmount;
         Session::put('products', $products);
         $this->emit('cart:update');
     }
@@ -72,11 +83,21 @@ class ShopCart extends Component
                     $product = Product::find($key);
                     if (isset($product)) $order->products()->attach($product->id, ['quantity' => $value]);
                 }
+
+                //Send to mail
+                $this->sendMail($order);
+
+                Session::forget('products');
+                $this->emit('cart:update');
+
                 session()->flash('success', 'Pedido realizado exitosamente!');
             }
 
-            Session::forget('products');
-            $this->emit('cart:update');
+
         }
+    }
+
+    public function sendMail($order){
+      Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
 }
