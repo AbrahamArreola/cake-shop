@@ -41,10 +41,19 @@ class ShopCart extends Component
 
     public function updateProductAmount($productId, $amount)
     {
+      if($amount > 0){
         $products = Session::get('products');
         $products[$productId] = (int)$amount;
         Session::put('products', $products);
         $this->emit('cart:update');
+      }
+      else{
+        $products = Session::get('products');
+        $products[$productId] = 1;
+        Session::put('products', $products);
+        $this->emit('cart:update');
+      }
+
     }
 
     public function makeOrder(){
@@ -67,12 +76,27 @@ class ShopCart extends Component
                 $order->products()->attach($product->id, ['quantity' => $value]);
             }
 
+<<<<<<< Updated upstream
             //mail
             //$this->sendMail($order);
 
             //Paypal PaymentE
             $this->PaypalPayment($order);
             //$this->sendMail($order);
+=======
+            if ($deletedProduct) {
+                session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
+            } else {
+                Session::put('amount', $total);
+                Session::put('productsPaypal', $products);
+
+                //Paypal PaymentE
+                if($total > 0){
+                    $this->PaypalPayment($total);
+                }
+
+                //$this->sendMail($order);
+>>>>>>> Stashed changes
 
             Session::forget('products');
             $this->emit('cart:update');
@@ -85,9 +109,16 @@ class ShopCart extends Component
       //Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
 
+<<<<<<< Updated upstream
     public function PaypalPayment($order){
       $paypal = new PaymentController();
       //return redirect('/paypal/pay');
       $paypal->payWithPayPal($order);
+=======
+    public function PaypalPayment($amount)
+    {
+        $paypal = new PaymentController();
+        $paypal->payWithPayPal($amount);
+>>>>>>> Stashed changes
     }
 }

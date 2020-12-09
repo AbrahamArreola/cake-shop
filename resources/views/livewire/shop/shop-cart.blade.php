@@ -17,6 +17,7 @@
                         </thead>
                         <tbody>
                             @foreach ($products as $product)
+<<<<<<< Updated upstream
                                 @php
                                 $productAmount = Session::get('products')[$product->id]
                                 @endphp
@@ -50,6 +51,44 @@
                                         </button>
                                     </td>
                                 </tr>
+=======
+                                @if (isset($product))
+                                    @php
+                                    $productAmount = Session::get('products')[$product->id]
+                                    @endphp
+                                    <tr>
+                                        <td class="thumbnail-img">
+                                            <a href="{{ route('product.show', [$product]) }}">
+                                                <img class="img-fluid"
+                                                    src="{{ asset('storage/products/' . $product->image) }}"
+                                                    alt="{{ $product->name }}" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <a href="{{ route('product.show', [$product]) }}">
+                                                {{ $product->name }}
+                                            </a>
+                                        </td>
+                                        <td class="price-pr">
+                                            <p>${{ $product->price }}</p>
+                                        </td>
+                                        <td class="quantity-box"><input type="number" size="4"
+                                                value="{{ $productAmount }}" max="20" min="1" step="1"
+                                                wire:click="updateProductAmount({{ $product->id }},$event.target.value)"
+
+                                                class="c-input-text qty text"></td>
+                                        <td class="total-pr">
+                                            <p class="w-16 m-0">${{ $productAmount * $product->price }}</p>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <button class="focus:outline-none"
+                                                wire:click='removeProduct({{ $product->id }})'>
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endif
+>>>>>>> Stashed changes
                             @endforeach
                         </tbody>
                     </table>
@@ -92,7 +131,7 @@
                     wire:click="makeOrder">Realizar pedido</button> </div>
         </div>
 
-        
+
 
 
     </div>
