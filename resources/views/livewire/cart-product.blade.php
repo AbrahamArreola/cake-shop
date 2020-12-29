@@ -1,0 +1,34 @@
+<tr>
+    <td class="thumbnail-img">
+        <a href="{{ route('product.show', [$product]) }}">
+            <img class="img-fluid" src="{{ asset('storage/products/' . $product->image) }}"
+                alt="{{ $product->name }}" />
+        </a>
+    </td>
+    <td class="name-pr">
+        <a href="{{ route('product.show', [$product]) }}">
+            {{ $product->name }}
+        </a>
+    </td>
+    <td class="price-pr">
+        <p>${{ $product->price }}</p>
+    </td>
+
+    <td class="quantity-box">
+        <div class="flex">
+            <p class="pt-2 w-6">{{ $productAmount }}</p>
+            <div class="flex flex-col ml-4 text-lg space-y-2">
+                <i class="fas fa-angle-up block cursor-pointer" wire:click="upAmount"></i>
+                <i class="fas fa-angle-down block cursor-pointer" wire:click="downAmount"></i>
+            </div>
+        </div>
+    </td>
+    <td class="total-pr">
+        <p class="w-16 m-0">${{ $productAmount * $product->price }}</p>
+    </td>
+    <td class="remove-pr">
+        <button class="focus:outline-none" wire:click="removeProduct">
+            <i class="fas fa-times"></i>
+        </button>
+    </td>
+</tr>

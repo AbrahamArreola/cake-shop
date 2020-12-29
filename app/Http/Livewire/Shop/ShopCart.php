@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Shop;
 
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
@@ -13,8 +12,11 @@ use App\Mail\OrderCreated;
 
 class ShopCart extends Component
 {
-    public function render()
-    {
+    protected $listeners = [
+        'cart:update' => '$refresh',
+    ];
+
+    public function getProducts(){
         $productsDict = Session::has('products') ? Session::get('products') : [];
 
         $products = [];
@@ -23,36 +25,17 @@ class ShopCart extends Component
             array_push($products, Product::find($key));
         }
 
+        return $products;
+    }
+
+    public function render()
+    {
+        $products = $this->getProducts();
+
         return view('livewire.shop.shop-cart', compact('products'));
     }
 
-    public function removeProduct($productId)
-    {
-        $products = Session::get('products');
-        unset($products[$productId]);
-
-        Session::put('products', $products);
-        $this->emit('cart:update');
-    }
-
-    public function updateProductAmount($productId, $amount)
-    {
-      if($amount > 20){
-        $newAmount = 20;
-      }
-      elseif ($amount > 0){
-        $newAmount = (int)$amount;
-      }
-      else{
-        $newAmount = 1;
-      }
-        $products = Session::get('products');
-        $products[$productId] = $newAmount;
-        Session::put('products', $products);
-        $this->emit('cart:update');
-    }
-
-    public function makeOrder()
+    public function confirmOrder()
     {
         $products = Session::has('products') ? Session::get('products') : [];
 
@@ -92,9 +75,11 @@ class ShopCart extends Component
 
                 session()->flash('success', 'Pedido realizado exitosamente!');
             }
-
-
         }
+        else{
+            session()->flash('fail', 'Seleccione por lo menos un producto para realizar un pedido.');
+        }
+        redirect()->route('shopCart');
     }
 
     public function sendMail($order){

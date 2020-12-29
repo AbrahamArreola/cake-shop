@@ -6,7 +6,7 @@
             @if (!$order->user->trashed())
                 <div class="inline-block rounded bg-gray-200 w-64 p-2 m-2">
                     <div class="flex justify-between py-1">
-                        <h3 class="text-sm pl-2 text-base">Order #{{ $order->id }}</h3>
+                        <h3 class="text-sm pl-2 text-base">Pedido #{{ $order->id }}</h3>
                         @if ($order->state == 0)
                             <p class="text-gray-500">Status: En proceso</p>
                         @else
