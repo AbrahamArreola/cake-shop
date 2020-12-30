@@ -36,6 +36,7 @@ class CartProduct extends Component
     public function upAmount()
     {
         if($this->productAmount < 20){
+            $this->dispatchBrowserEvent('loading-window');
             $this->productAmount++;
             $this->updateProductAmount();
         }
@@ -44,6 +45,7 @@ class CartProduct extends Component
     public function downAmount()
     {
         if($this->productAmount > 1){
+            $this->dispatchBrowserEvent('loading-window');
             $this->productAmount--;
             $this->updateProductAmount();
         }

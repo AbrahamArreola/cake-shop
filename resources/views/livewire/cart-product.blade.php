@@ -18,8 +18,11 @@
         <div class="flex">
             <p class="pt-2 w-6">{{ $productAmount }}</p>
             <div class="flex flex-col ml-4 text-lg space-y-2">
-                <i class="fas fa-angle-up block cursor-pointer" wire:click="upAmount"></i>
-                <i class="fas fa-angle-down block cursor-pointer" wire:click="downAmount"></i>
+                <button class="fas fa-angle-up block cursor-pointer" wire:click="upAmount"
+                    wire:loading.attr="disabled"></button>
+                <button class="fas fa-angle-down block cursor-pointer" wire:click="downAmount"
+                    wire:loading.attr="disabled"></button>
+
             </div>
         </div>
     </td>

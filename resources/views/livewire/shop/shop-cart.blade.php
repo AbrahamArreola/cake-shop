@@ -1,5 +1,11 @@
 {{-- Start Shop Cart --}}
-<div class="cart-box-main">
+<div class="relative cart-box-main" x-data="{ loading: false }">
+    <div @loading-window.window="loading = true;setTimeout(() => loading = false, 800)" x-show="loading"
+        class="absolute inset-0 h-full z-10 flex justify-center" style="background-color: rgba(0, 0, 0, 0.5)">
+        <div class="spinner-border my-auto w-28 h-28" role="status" style="color: white">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -50,9 +56,9 @@
                                 <h4>{{ $productAmount . ' - ' . $product->name }}</h4>
                                 <div class="ml-auto font-weight-bold"> ${{ $productTotal }} </div>
                             </div>
+                            <hr>
                         @endif
                     @endforeach
-                    <hr>
                     <div class="d-flex gr-total py-2">
                         <h5>Total</h5>
                         <div class="ml-auto h5">${{ $total }}</div>
