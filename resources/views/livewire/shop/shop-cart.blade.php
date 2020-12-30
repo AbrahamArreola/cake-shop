@@ -82,10 +82,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>¿Desea confirmar el pedido actual?</p>
+                        <h4>¿Desea confirmar el pedido actual?</h4>
+                        <div class="text-red-400" wire:loading wire:target="confirmOrder">
+                            <div class="spinner-border inline-block" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <p class="inline-block">Espere por favor...</p>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn primary" wire:click="confirmOrder">Confirmar</button>
+                        <button type="submit" class="btn primary" wire:click="confirmOrder" wire:loading.attr="disabled"
+                            wire:target="confirmOrder">Confirmar</button>
                         <button type="button" class="btn secondary" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>

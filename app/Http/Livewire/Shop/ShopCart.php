@@ -16,7 +16,8 @@ class ShopCart extends Component
         'cart:update' => '$refresh',
     ];
 
-    public function getProducts(){
+    public function getProducts()
+    {
         $productsDict = Session::has('products') ? Session::get('products') : [];
 
         $products = [];
@@ -46,19 +47,17 @@ class ShopCart extends Component
             //get total amount
             foreach ($products as $key => $value) {
                 $product = Product::find($key);
-                if (isset($product)){
+                if (isset($product)) {
                     $total += $value * $product->price;
-                }
-                else{
+                } else {
                     $deletedProduct = true;
                     break;
                 }
             }
 
-            if($deletedProduct){
+            if ($deletedProduct) {
                 session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
-            }
-            else{
+            } else {
                 $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
 
                 //create relations
@@ -75,14 +74,14 @@ class ShopCart extends Component
 
                 session()->flash('success', 'Pedido realizado exitosamente!');
             }
-        }
-        else{
+        } else {
             session()->flash('fail', 'Seleccione por lo menos un producto para realizar un pedido.');
         }
         redirect()->route('shopCart');
     }
 
-    public function sendMail($order){
-      Mail::to(Auth::user()->email)->send(new OrderCreated($order));
+    public function sendMail($order)
+    {
+        Mail::to(Auth::user()->email)->send(new OrderCreated($order));
     }
 }

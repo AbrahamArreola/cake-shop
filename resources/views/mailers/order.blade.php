@@ -382,7 +382,7 @@
                                             <td class="headerContent">
 
                                             	<!-- // Begin Module: Standard Header Image \\ -->
-                                            	<img src="{{ asset('assets/images/cupcakemio_email_banner.png') }}" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+                                            	<img src="{{ $message->embed(asset('assets/images/cupcakemio_email_banner.png')) }}" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
                                             	<!-- // End Module: Standard Header Image \\ -->
 
                                             </td>
@@ -448,7 +448,7 @@
                                                                         <table border="0" cellpadding="5" cellspacing="0" width="50%">
                                                                             <tr mc:repeatable>
                                                                                 <td valign="top">
-                                                                                    <img src="{{asset('storage/products/' . $product->image)}}" style="max-width:50px;" mc:label="image" mc:edit="tiwc150_image01" />
+                                                                                    <img src="{{ $message->embed(asset('storage/products/' . $product->image)) }}" style="max-width:50px;" mc:label="image" mc:edit="tiwc150_image01" />
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -467,7 +467,7 @@
                                                             	<tr>
                                                                 	<td valign="middle" class="templateButtonContent">
                                                                     	<div mc:edit="std_content02">
-                                                                        	<a href="http://cake-shop.com/index" target="_blank">Cupcake Mio</a>
+                                                                        	<a href="{{ route('index') }}" target="_blank" style="color: #000;text-decoration: none;">Cupcake Mio</a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>

@@ -35,8 +35,9 @@ class OrderCreated extends Mailable
      */
     public function build()
     {
-        return $this->from('CupcakeMio@cupcakemio.com')
+        return $this->from(env('MAIL_FROM_ADDRESS'))
                     ->subject('Cupcake Mio - Order #' . $this->order->id)
-                    ->view('mailers.order');
+                    ->view('mailers.order')
+                    ->with(['message' => $this]);
     }
 }
