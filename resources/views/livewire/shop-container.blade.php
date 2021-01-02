@@ -1,5 +1,11 @@
 {{-- Start Shop Page --}}
-<div class="shop-box-inner" x-data="{showSuccess: false}">
+<div class="relative shop-box-inner" x-data="{showSuccess: false}">
+    <div class="absolute inset-0 h-full z-10" style="background-color: rgba(0, 0, 0, 0.5)"
+        wire:loading wire:target="addToCart">
+        <div class="spinner-border fixed top-2/4 right-2/4 w-28 h-28" role="status" style="color: white">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
@@ -217,8 +223,8 @@
             class=" fixed left-0 bottom-0 z-50 w-full md:w-1/3 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 pl-4 pr-1 pb-4 shadow-md"
             x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" role="alert">
             <div>
-                <p class="w-full text-right cursor-pointer" x-on:click="show = false">Cerrar<i
-                        class="fas fa-times"></i></p>
+                <p class="w-full text-right cursor-pointer" x-on:click="show = false">Cerrar<i class="fas fa-times"></i>
+                </p>
                 <div class="flex">
                     <div class="py-1">
                         <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg"
