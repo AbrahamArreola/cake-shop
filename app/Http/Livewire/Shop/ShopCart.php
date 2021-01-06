@@ -9,14 +9,20 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use App\Mail\OrderCreated;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Stripe\Charge;
+use Stripe\Exception\CardException;
+use Stripe\Stripe;
 
 class ShopCart extends Component
 {
     protected $listeners = [
         'cart:update' => '$refresh',
+        'confirm:order' => 'confirmOrder'
     ];
 
-    public function getProducts()
+    private function getProducts()
     {
         $productsDict = Session::has('products') ? Session::get('products') : [];
 
@@ -36,7 +42,32 @@ class ShopCart extends Component
         return view('livewire.shop.shop-cart', compact('products'));
     }
 
-    public function confirmOrder()
+    private function createOrderQuery($products, $total)
+    {
+        $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
+
+        //create relations
+        foreach ($products as $key => $value) {
+            $product = Product::find($key);
+            if (isset($product)) $order->products()->attach($product->id, ['quantity' => $value]);
+        }
+
+        return $order;
+    }
+
+    private function cardPayment($orderId, $amount, $cardToken)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Charge::create([
+            "amount" => $amount * 100,
+            "currency" => "mxn",
+            "source" => $cardToken,
+            "description" => "Cupcake mio pedido #" . $orderId
+        ]);
+    }
+
+    public function confirmOrder($paymentData)
     {
         $products = Session::has('products') ? Session::get('products') : [];
 
@@ -58,13 +89,30 @@ class ShopCart extends Component
             if ($deletedProduct) {
                 session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
             } else {
-                $order = Order::create(['state' => 'pendiente', 'amount' => $total, 'user_id' => Auth::user()->id]);
+                $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
+                $nextOrderId = $statement[0]->Auto_increment;
 
-                //create relations
-                foreach ($products as $key => $value) {
-                    $product = Product::find($key);
-                    if (isset($product)) $order->products()->attach($product->id, ['quantity' => $value]);
+                switch ($paymentData["paymentOption"]) {
+                    case 'card':
+                        $cardToken = $paymentData["token"];
+
+                        try {
+                            $this->cardPayment($nextOrderId, $total, $cardToken);
+                        } catch (CardException $error) {
+                            session()->flash('fail', $error->getError()->message);
+                            return redirect()->route('shopCart');
+                        } catch (Exception $error) {
+                            session()->flash('fail', "Algo falló al tratar de realizar el pago");
+                            return redirect()->route('shopCart');
+                        }
+                        break;
+
+                    case 'paypal':
+                        dd("paypal");
+                        break;
                 }
+
+                $order = $this->createOrderQuery($products, $total);
 
                 //Send to mail
                 $this->sendMail($order);

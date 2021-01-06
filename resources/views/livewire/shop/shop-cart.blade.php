@@ -72,27 +72,67 @@
 
         {{-- Confirm Order Modal --}}
         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true">
+            aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Confirmar pedido</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Seleccione un método de pago</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h4>¿Desea confirmar el pedido actual?</h4>
-                        <div class="text-red-400" wire:loading wire:target="confirmOrder">
-                            <div class="spinner-border inline-block" role="status">
-                                <span class="sr-only">Loading...</span>
+                        <div class="w-full flex justify-center">
+                            <div id="payment-options">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="card-option"
+                                        value="card">
+                                    <label class="form-check-label" for="card-option">
+                                        Tarjeta de crédito/débito
+                                    </label>
+                                    <img src="{{ asset('assets/images/card-logos.png') }}" alt="Available payment cards"
+                                        class="inline-block w-aut h-4 ml-2">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="paypal-option"
+                                        value="paypal">
+                                    <label class="form-check-label" for="paypal-option">
+                                        Paypal
+                                    </label>
+                                    <img src="{{ asset('assets/images/paypal-logo.png') }}" alt="Paypal payment method"
+                                        class="inline-block w-aut h-4 ml-2">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="cash-option"
+                                        value="cash" checked>
+                                    <label class="form-check-label" for="cash-option">
+                                        Efectivo
+                                    </label>
+                                </div>
                             </div>
-                            <p class="inline-block">Espere por favor...</p>
+                        </div>
+                        <div class="hidden flex flex-col space-y-2 w-full mt-2 bg-gray-100 rounded border border-black p-2"
+                            id="card-payment" wire:ignore>
+                            <div id="payment-form">
+                                <div class="form-row">
+                                    <div id="card-element"></div>
+                                    <div id="card-errors" role="alert" class=" text-red-500"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn primary" wire:click="confirmOrder" wire:loading.attr="disabled"
-                            wire:target="confirmOrder">Confirmar</button>
+                        <button class="btn primary" id="acceptOrder" wire:loading.attr="disabled">
+
+                            <p wire:loading.remove>Realizar pago</p>
+                            <div class="text-red-400" wire:loading>
+                                <div class="spinner-border inline-block w-6 h-6" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <p class="inline-block">Espere por favor...</p>
+                            </div>
+
+                        </button>
                         <button type="button" class="btn secondary" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
@@ -126,4 +166,83 @@
             </div>
         @endif
     </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        $("#payment-options").click(function() {
+            if ($("#card-option").is(":checked")) {
+                $("#card-payment").slideDown();
+            } else {
+                $("#card-payment").slideUp();
+            }
+        });
+
+        $(function loadStripe() {
+            // Create a Stripe client.
+            var stripe = Stripe("{{ env('STRIPE_KEY') }}");
+
+            // Create an instance of Elements.
+            var elements = stripe.elements();
+
+            // Custom styling can be passed to options when creating an Element.
+            // (Note that this demo uses a wider set of styles than the guide below.)
+            var style = {
+                base: {
+                    color: '#32325d',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
+                }
+            };
+
+            // Create an instance of the card Element.
+            var card = elements.create('card', {
+                style: style
+            });
+
+            // Add an instance of the card Element into the `card-element` <div>.
+            card.mount('#card-element');
+            // Handle real-time validation errors from the card Element.
+            card.on('change', function(event) {
+                var displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+
+            $("#acceptOrder").on("click", function() {
+                var paymentOption = $('#payment-options input:radio:checked').val()
+
+                if (paymentOption === "card") {
+                    stripe.createToken(card).then(function(result) {
+                        if (result.error) {
+                            // Inform the user if there was an error.
+                            var errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+                        } else {
+                            // Send the token to your server.
+                            Livewire.emit("confirm:order", {
+                                paymentOption,
+                                token: result.token.id
+                            });
+                        }
+                    });
+                } else {
+                    Livewire.emit("confirm:order", {
+                        paymentOption
+                    });
+                }
+            });
+        });
+
+    </script>
 </div>
