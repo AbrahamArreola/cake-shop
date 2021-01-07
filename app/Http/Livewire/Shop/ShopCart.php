@@ -87,6 +87,7 @@ class ShopCart extends Component
             }
 
             if ($deletedProduct) {
+                Session::forget('products');
                 session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
             } else {
                 $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
@@ -108,7 +109,8 @@ class ShopCart extends Component
                         break;
 
                     case 'paypal':
-                        dd("paypal");
+                        Session::put('totalAmount', $total);
+                        return redirect()->route('payPalPayment', [$nextOrderId, $total]);
                         break;
                 }
 
@@ -118,14 +120,12 @@ class ShopCart extends Component
                 $this->sendMail($order);
 
                 Session::forget('products');
-                $this->emit('cart:update');
-
                 session()->flash('success', 'Pedido realizado exitosamente!');
             }
         } else {
             session()->flash('fail', 'Seleccione por lo menos un producto para realizar un pedido.');
         }
-        redirect()->route('shopCart');
+        return redirect()->route('shopCart');
     }
 
     public function sendMail($order)

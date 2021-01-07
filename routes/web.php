@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\PaypalController;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
@@ -59,18 +60,17 @@ Route::get('/about',[MainController::class, 'about'])->name('about');
 
 Route::get('/contact',[MainController::class, 'contact'])->name('contact');
 
-/* Route::get('/product-registration', function() {
-    return view('productCrud');
-}); */
-
 // Google Verification
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
+// PayPal Routes
+Route::get('paypal/pay/{orderId}/{orderAmount}', [PaypalController::class, 'payWithPayPal'])->name('payPalPayment');
+Route::get('paypal/status', [PaypalController::class, 'payPalStatus'])->name('payPalStatus');
 
+// Resource Routes (Product, Category)
 Route::resource('product', ProductController::class);
 Route::resource('category', CategoryController::class);
-//Route::resource('about', MainController::class);
 
 /* Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
