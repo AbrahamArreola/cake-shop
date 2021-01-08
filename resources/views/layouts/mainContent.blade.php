@@ -28,6 +28,7 @@
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     @livewireStyles
 
@@ -84,17 +85,7 @@
                 @auth
                     <div class="absolute right-6 attr-nav">
                         <ul>
-                            @can('admin-settings')
-                                <li class="side-menu">
-                                    <a href="{{ route('orders') }}">
-                                        <i class="fas fa-bell"></i>
-                                        <p>Pedidos</p>
-                                    </a>
-                                </li>
-
-                            @elsecannot('admin-settings')
-                                @livewire('cart-icon')
-                            @endcan
+                            @livewire('cart-icon')
 
                             @livewire('profile-menu')
                         </ul>

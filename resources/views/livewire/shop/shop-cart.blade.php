@@ -165,6 +165,8 @@
                 </div>
             </div>
         @endif
+
+        <input type="hidden" id="stripe_key" value="{{ env('STRIPE_KEY') }}"/>
     </div>
 
     <script src="https://js.stripe.com/v3/"></script>
@@ -179,7 +181,8 @@
 
         $(function loadStripe() {
             // Create a Stripe client.
-            var stripe = Stripe("{{ env('STRIPE_KEY') }}");
+            var stripeKey = document.getElementById('stripe_key').value;
+            var stripe = Stripe(stripeKey);
 
             // Create an instance of Elements.
             var elements = stripe.elements();

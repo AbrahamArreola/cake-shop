@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Shop;
 
+use App\Events\ShopUpdate;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -120,6 +121,7 @@ class ShopCart extends Component
                 $this->sendMail($order);
 
                 Session::forget('products');
+                event(new ShopUpdate());
                 session()->flash('success', 'Pedido realizado exitosamente!');
             }
         } else {

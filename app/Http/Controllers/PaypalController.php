@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ShopUpdate;
 use App\Mail\OrderCreated;
 use App\Models\Order;
 use App\Models\Product;
@@ -108,6 +109,7 @@ class PaypalController extends Controller
 
                 Mail::to(Auth::user()->email)->send(new OrderCreated($order));
                 Session::forget('products');
+                event(new ShopUpdate());
                 return redirect()->route('shopCart')->with('success', 'Pedido realizado exitosamente!');
             }
 
