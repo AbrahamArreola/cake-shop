@@ -41,7 +41,9 @@
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
                     <div class="products-single fix">
                         <div class="box-img-hover">
-                            <img src="{{ asset('storage/products/' . $product->image) }}" class="img-fluid" alt="Image">
+                            {{-- <img src="{{ asset('storage/products/' . $product->image) }}" class="img-fluid" alt="Image"> --}}
+                            {{-- Static image for heroku deployment --}}
+                            <img src="{{ asset('assets/images/desserts.jpeg') }}" class="img-fluid" alt="Desserts image">
                             @can('admin-settings')
                                 <div class="mask-icon">
                                     <ul>

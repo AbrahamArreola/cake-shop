@@ -1,8 +1,10 @@
 <tr>
     <td class="thumbnail-img">
         <a href="{{ route('product.show', [$product]) }}">
-            <img class="img-fluid" src="{{ asset('storage/products/' . $product->image) }}"
-                alt="{{ $product->name }}" />
+            {{-- <img class="img-fluid" src="{{ asset('storage/products/' . $product->image) }}"
+                alt="{{ $product->name }}" /> --}}
+            {{-- Static image for heroku deployment --}}
+            <img src="{{ asset('assets/images/desserts.jpeg') }}" class="img-fluid" alt="Desserts image">
         </a>
     </td>
     <td class="name-pr">

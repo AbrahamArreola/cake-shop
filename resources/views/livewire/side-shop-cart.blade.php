@@ -10,8 +10,11 @@
             $total += $productTotal;
             @endphp
             <li>
-                <a href="{{ route('product.show', [$product]) }}" class="photo"><img
-                        src="{{ asset('storage/products/' . $product->image) }}" class="cart-thumb" alt="" /></a>
+                <a href="{{ route('product.show', [$product]) }}" class="photo">
+                    {{-- <img src="{{ asset('storage/products/' . $product->image) }}" class="cart-thumb" alt="" /> --}}
+                    {{-- Static image for heroku deployment --}}
+                    <img src="{{ asset('assets/images/desserts.jpeg') }}" class="img-fluid" alt="Desserts image">
+                </a>
                 <h6><a href="{{ route('product.show', [$product]) }}">{{ $product->name }}</a></h6>
                 <p>{{ $productAmount }}x - <span class="price">${{ $product->price }}</span></p>
             </li>

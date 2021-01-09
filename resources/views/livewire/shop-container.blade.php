@@ -1,7 +1,7 @@
 {{-- Start Shop Page --}}
 <div class="relative shop-box-inner" x-data="{showSuccess: false}">
-    <div class="absolute inset-0 h-full z-10" style="background-color: rgba(0, 0, 0, 0.5)"
-        wire:loading wire:target="addToCart">
+    <div class="absolute inset-0 h-full z-10" style="background-color: rgba(0, 0, 0, 0.5)" wire:loading
+        wire:target="addToCart">
         <div class="spinner-border fixed top-2/4 right-2/4 w-28 h-28" role="status" style="color: white">
             <span class="sr-only">Loading...</span>
         </div>
@@ -54,8 +54,14 @@
                                                                 {{ $daysDiff <= $maxDays ? 'Nuevo' : 'En venta' }}
                                                             </p>
                                                         </div>
-                                                        <img src="{{ asset('storage/products/' . $prod->image) }}"
+                                                        {{-- <img
+                                                            src="{{ asset('storage/products/' . $prod->image) }}"
                                                             class="img-fluid" alt="Image">
+                                                        --}}
+                                                        {{-- Static image for heroku
+                                                        deployment --}}
+                                                        <img src="{{ asset('assets/images/desserts.jpeg') }}"
+                                                            class="img-fluid" alt="Desserts image">
                                                         <div class="mask-icon">
                                                             <ul>
                                                                 @can('client-settings')
@@ -108,8 +114,14 @@
                                                                     {{ $daysDiff <= $maxDays ? 'Nuevo' : 'En venta' }}
                                                                 </p>
                                                             </div>
-                                                            <img src="{{ asset('storage/products/' . $prod->image) }}"
+                                                            {{-- <img
+                                                                src="{{ asset('storage/products/' . $prod->image) }}"
                                                                 class="img-fluid" alt="Image">
+                                                            --}}
+                                                            {{-- Static image for heroku
+                                                            deployment --}}
+                                                            <img src="{{ asset('assets/images/desserts.jpeg') }}"
+                                                                class="img-fluid" alt="Desserts image">
                                                         </div>
                                                     </div>
                                                 </div>

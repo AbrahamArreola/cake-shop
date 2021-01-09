@@ -448,7 +448,9 @@
                                                                         <table border="0" cellpadding="5" cellspacing="0" width="50%">
                                                                             <tr mc:repeatable>
                                                                                 <td valign="top">
-                                                                                    <img src="{{ $message->embed(asset('storage/products/' . $product->image)) }}" style="max-width:50px;" mc:label="image" mc:edit="tiwc150_image01" />
+                                                                                    {{-- <img src="{{ $message->embed(asset('storage/products/' . $product->image)) }}" style="max-width:50px;" mc:label="image" mc:edit="tiwc150_image01" /> --}}
+                                                                                    {{-- Static image for heroku deployment --}}
+                                                                                    <img src="{{ $message->embed(asset('assets/images/desserts.jpeg')) }}" style="max-width:50px;" mc:label="image" mc:edit="tiwc150_image01" />
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
