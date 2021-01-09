@@ -12,6 +12,7 @@ class CartIcon extends Component
     protected $listeners = [
         'cart:update' => '$refresh',
         'echo:order-update,ShopUpdate' => '$refresh',
+        'echo:order-taken,OrderTaken' => '$refresh'
     ];
 
     public function render()

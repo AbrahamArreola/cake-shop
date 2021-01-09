@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Shop;
 
-use App\Events\ShopUpdate;
+use App\Events\OrderTaken;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -11,6 +11,7 @@ class OrdersView extends Component
 {
     protected $listeners = [
         'echo:order-update,ShopUpdate' => '$refresh',
+        'echo:order-taken,OrderTaken' => '$refresh'
     ];
 
     public function render()
@@ -29,6 +30,6 @@ class OrdersView extends Component
     public function takeOrder($orderId)
     {
         Order::find($orderId)->update(['state' => 'tomado']);
-        event(new ShopUpdate());
+        event(new OrderTaken());
     }
 }

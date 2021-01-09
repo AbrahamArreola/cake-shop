@@ -146,8 +146,10 @@
                             <p>Puedes contactarnos y obtener más información acerca de nuestras novedades en nuestras
                                 redes sociales</p>
                             <ul>
-                                <li><a href="https://www.facebook.com/cupcakemio" target="_blank"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="https://www.instagram.com/cupcakemio/" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.facebook.com/cupcakemio" target="_blank"><i
+                                            class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/cupcakemio/" target="_blank"><i
+                                            class="fab fa-instagram" aria-hidden="true"></i></a></li>
                                 <!--<li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>-->
                                 <!--<li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>-->
                                 <!--<li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>-->
@@ -181,6 +183,45 @@
         </div>
     </footer>
     <!-- End Footer  -->
+
+    @can('admin-settings')
+        <div class="hidden fixed left-0 bottom-0 z-50 w-full md:w-1/3 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 pl-4 pr-2 pb-4 shadow-md"
+            role="alert" id="newOrderMessage">
+            <div>
+                <p class="w-full text-right cursor-pointer" id="closeOrderMsg">Cerrar<i class="fas fa-times"></i>
+                </p>
+                <div class="flex">
+                    <div class="py-1">
+                        <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20">
+                            <path
+                                d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold">Usted tiene un nuevo pedido</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function() {
+                Echo.channel('order-update').listen('ShopUpdate', () => {
+                    $('#newOrderMessage').fadeIn('slow');
+                    $('#newOrderMessage').delay(4000).fadeOut('slow');
+
+                    const audio = new Audio("{{ asset('assets/audio/giornos_theme.mp3') }}");
+                    audio.play();
+                });
+            });
+
+            $("#closeOrderMsg").on("click", function() {
+                $('#newOrderMessage').hide();
+            });
+
+        </script>
+    @endcan
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
