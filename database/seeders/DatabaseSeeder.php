@@ -17,14 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $directory = 'public/products';
-        if(!Storage::has($directory)){
-            Storage::makeDirectory($directory);
-        }
-
         $this->call([RoleSeeder::class]);
-        User::factory(10)->create();
-        Category::factory(6)->create();
-        Product::factory(30)->create();
+
+        if (env('APP_ENV') == 'local') {
+            $directory = 'public/products';
+            if (!Storage::has($directory)) {
+                Storage::makeDirectory($directory);
+            }
+
+            User::factory(10)->create();
+            Category::factory(6)->create();
+            Product::factory(30)->create();
+        }
     }
 }

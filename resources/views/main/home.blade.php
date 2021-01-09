@@ -3,8 +3,8 @@
 @section('title', 'Inicio')
 
 @section('styleFiles')
-  <link rel="stylesheet" href="{{ asset('css/productShow.css') }}">
-  <link rel="stylesheet" href="{{ asset('css/productCrud.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/productShow.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/productCrud.css') }}">
 @endsection
 
 @section('scriptFiles')
@@ -12,45 +12,41 @@
 @endsection
 
 @section('content')
-
-    <!-- -->
-
-    <!-- -->
     <!-- Start Slider -->
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
             <li class="text-center">
-                <img src="{{ asset('assets/images/carrusel_1.jpg') }}" alt="">
+                <img src="{{ asset('assets/images/carrusel_1.jpg') }}" alt="Cupcake mio Brownies">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Cupcake Mío</strong></h1>
-                            <p class="m-b-40">Pastelería y repostería.</p>
-                            <p><a class="btn hvr-hover" href="{{ route('product.index') }}">Compra Ahora</a></p>
+                            <p class="m-b-40">Pasteles, cupcakes personalizados, trabajo en fondant, postres y más.</p>
+                            <p><a class="btn hvr-hover" href="{{ route('product.index') }}">Comprar Ahora</a></p>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="text-center">
-                <img src="{{ asset('assets/images/carrusel_2.jpg') }}" alt="">
+                <img src="{{ asset('assets/images/carrusel_2.jpg') }}" alt="Cupcake mio birthday cookies">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Cupcake Mío</strong></h1>
                             <p class="m-b-40">Pastelería y repostería.</p>
-                            <p><a class="btn hvr-hover" href="{{ route('product.index') }}">Shop New</a></p>
+                            <p><a class="btn hvr-hover" href="{{ route('product.index') }}">Comprar ahora</a></p>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="text-center">
-                <img src="{{ asset('assets/images/carrusel_3.jpg') }}" alt="">
+                <img src="{{ asset('assets/images/carrusel_3.jpg') }}" alt="Cupcake mio happy world cake">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Cupcake Mío</strong></h1>
                             <p class="m-b-40">Pastelería y repostería.</p>
-                            <p><a class="btn hvr-hover" href="{{ route('product.index') }}">Shop New</a></p>
+                            <p><a class="btn hvr-hover" href="{{ route('product.index') }}">Comprar ahora</a></p>
                         </div>
                     </div>
                 </div>
@@ -89,28 +85,6 @@
         </div>
     </div>
     <!-- End Categories -->
-
-  <div class="box-add-products">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="offer-box-products">
-            <img class="img-fluid" src="images/add-img-01.jpg" alt="" />
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12">
-          <div class="offer-box-products">
-            <img class="img-fluid" src="images/add-img-02.jpg" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <!-- Start Products  -->
-
-    <!-- End Products  -->
-
 
     <!-- Start Instagram Feed  -->
     <div class="instagram-box">
@@ -198,14 +172,5 @@
         </div>
     </div>
     <!-- End Instagram Feed  -->
-
-    <!-- Start copyright  -->
-    <div class="footer-copyright">
-        <p class="footer-company">All Rights Reserved. &copy; 2018 <a href="#">ThewayShop</a> Design By :
-            <a href="https://html.design/">html design</a></p>
-    </div>
-    <!-- End copyright  -->
-
-    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
 @endsection

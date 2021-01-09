@@ -7,6 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
 
+    {{-- Webpage icon --}}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/cupcake-mio-favicon.png') }}">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <!-- Site CSS -->
@@ -50,8 +53,8 @@
                         aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="/product-registration"><img
-                            src="{{ asset('assets/images/logo.jpg') }}" class="logo" alt=""></a>
+                    <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('assets/images/logo.jpg') }}"
+                            class="logo" alt="cupcake mio logo"></a>
                 </div>
                 <!-- End Header Navigation -->
 
