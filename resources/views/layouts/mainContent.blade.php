@@ -65,18 +65,24 @@
                                 href="{{ route('index') }}">Inicio</a></li>
                         <li class="nav-item {{ $menu == 'menu2' ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ route('about') }}">¿Quiénes somos?</a></li>
-                        <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
-                            <a href="{{ route('product.index') }}" class="nav-link dropdown-toggle arrow"
-                                data-toggle="dropdown">Tienda</a>
-                            @auth
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ route('product.index') }}">Productos</a></li>
-                                    @can('client-settings')
-                                        <li><a href="{{ route('shopCart') }}">Carrito de compras</a></li>
-                                    @endcan
-                                    <li><a href="{{ route('orders') }}">Pedidos</a></li>
-                                </ul>
-                            @endauth
+                        @auth
+                            <li class="dropdown {{ $menu == 'menu3' ? 'active' : '' }}">
+                                <a href="{{ route('product.index') }}" class="nav-link dropdown-toggle arrow"
+                                    data-toggle="dropdown">Tienda</a>
+                        @else
+                            <li class="nav-item {{ $menu == 'menu3' ? 'active' : '' }}"><a class="nav-link"
+                                    href="{{ route('product.index') }}">Tienda</a></li>
+                        @endauth
+
+                        @auth
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ route('product.index') }}">Productos</a></li>
+                                @can('client-settings')
+                                    <li><a href="{{ route('shopCart') }}">Carrito de compras</a></li>
+                                @endcan
+                                <li><a href="{{ route('orders') }}">Pedidos</a></li>
+                            </ul>
+                        @endauth
                         </li>
                         <li class="nav-item {{ $menu == 'menu4' ? 'active' : '' }}"><a class="nav-link"
                                 href="{{ route('contact') }}">Contacto</a></li>

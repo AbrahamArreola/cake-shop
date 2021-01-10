@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use App\Mail\OrderCreated;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Stripe\Charge;
 use Stripe\Exception\CardException;
 use Stripe\Stripe;

@@ -18,10 +18,10 @@ class OrdersView extends Component
     {
         //Return all orders if user is admin
         if(Auth::user()->can('admin-settings')){
-            $orders = Order::all();
+            $orders = Order::orderBy('id', 'ASC')->get();
         }
         else{
-            $orders = Auth::user()->orders;
+            $orders = Auth::user()->orders()->orderBy('id', 'ASC')->get();
         }
 
         return view('livewire.shop.orders-view', compact('orders'));
