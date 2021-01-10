@@ -91,8 +91,8 @@ class ShopCart extends Component
                 Session::forget('products');
                 session()->flash('fail', 'Un producto seleccionado fue retirado del catálogo, seleccione de nuevo. Disculpe las molestias u.u');
             } else {
-                $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
-                $nextOrderId = $statement[0]->Auto_increment;
+                $lastOrder = Order::all()->sortByDesc('id')->first();
+                $nextOrderId = $lastOrder ? (int) $lastOrder->id + 1 : 1;
 
                 switch ($paymentData["paymentOption"]) {
                     case 'card':
