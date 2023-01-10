@@ -26,3 +26,5 @@ Finalmente, también es importante realizar las migraciones con los seeders ya q
 ```shell
 php artisan migrate --seed
 ```
+
+*Deployed on Heroku*
